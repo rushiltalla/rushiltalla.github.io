@@ -36,22 +36,21 @@
 						<div class="inner">
 							<h1 class="major">Blightfall</h1>
 							<span class="image fit"><img src="images/BlightfallMenu.jpg" width="400" height="600" alt="" /></span>
-							<p>This is a remake of the first dungeon, "Eagle", from the Legend of Zelda for NES. This was developed over a course of three weeks as the first project of EECS 494 at the University of Michigan.
-								The dungeon was designed to have the authenticity of the original game, with the same weapons, enemies, and mechanics. Aside from replicating the original game, we were 
-								tasked with designing a custom level of our own that employed a new mechanic not seen in the Zelda franchise. Inspired by the thought of making a puzzle game, I
-								thought a dungeon based on using portals to solve puzzles would be a fun challenge to not only make, but also for players as they face interesting challenges in each room. 
+							<p>Blightfall is a tower defense style game where players must use different mechanics including a rover to defend their spaceship and attempt to escape the hostile planet they are on
+								This was developed over a course of two weeks as a rapid prototype concept for the second project in the class EECS 494 at the University of Michigan.
+								Player have to make many decisions, from what towers to build to what to upgrade and even where to keep the rover so that its abilities can be used to prevent failure. 
 							</p>
 
-							<p> I used Photoshop to make the sprites for all of the new game objects not found in the original level (The portals, portal gun, cube, wires, etc.)
-								and C# with Unity to develop the game. This was a team project so for version control we used Git and for project management we used Atlassian Jira.</p>
+							<p> I used Autodesk Inventor to make the models in this game (from the rover to the platforms and attachments), Photoshop for editing pictures,
+								and C# with Unity to develop the game. Althought this was a solo project, I used Git for version control and Atlassian Jira for project management.</p>
 
 							<p>Controls To Play Below:
 								<ul>
-									<li>Arrow Keys to move</li>
-									<li>'X' for weapon in A slot</li>
-									<li>'Z' for weapon in B slot</li>
-									<li>'Space' to switch B slot weapon</li>
-									<li>'4' to exit to Menu</li>
+									<li>Arrow Keys to rotate camera</li>
+									<li>WASD Keys to move rover</li>
+									<li>'E' to use rover laser</li>
+									<li>'Q' to reset rover</li>
+									<li>Mouse to use UI and interactable objects</li>
 								</ul>  
 							</p>
 							
@@ -154,8 +153,8 @@
 				} else {
 				// Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 		
-				canvas.style.width = "1920px";
-				canvas.style.height = "1080px";
+				canvas.style.width = "960px";
+				canvas.style.height = "540px";
 				}
 		
 				loadingBar.style.display = "block";
