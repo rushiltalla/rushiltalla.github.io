@@ -43,33 +43,30 @@
 							<section id="one">
 								<div class="inner">
 									<header class="major">
-										<h1>The Legend of Zelda (NES) Remake</h1>
+										<h1>Blightfall</h1>
 									</header>
-									<span class="image main"><img src="../images/zelda_main.jpg" alt="" /></span>
-									<p>This is a remake of the first dungeon, "Eagle", from the Legend of Zelda for NES. This was developed over a course of three weeks as the first project of EECS 494 at the University of Michigan.
-										The dungeon was designed to have the authenticity of the original game, with the same weapons, enemies, and mechanics. Aside from replicating the original game, we were 
-										tasked with designing a custom level of our own that employed a new mechanic not seen in the Zelda franchise. Inspired by the thought of making a puzzle game, I
-										thought a dungeon based on using portals to solve puzzles would be a fun challenge to not only make, but also for players as they face interesting challenges in each room. 
+									<span class="image main"><img src="../images/blightfall_main.jpg" alt="" /></span>
+									<p>Blightfall is a tower defense style game where players must use different mechanics including a rover to defend their spaceship from hordes of enemies and attempt to escape the hostile planet they are on.
+										This was developed over a course of two weeks as a rapid prototype concept for the second project in the class EECS 494 at the University of Michigan.
+										Players have to make many decisions, from what towers to build to what to upgrade and even where to keep the rover so that its abilities can be used to prevent failure. 
 									</p>
-
-									<p> I used Photoshop to make the sprites for all of the new game objects not found in the original level (The portals, portal gun, cube, wires, etc.)
-										and C# with Unity to develop the game. This was a team project so for version control we used Git and for project management we used Atlassian Jira.
-									</p>
+		
+									<p> I used Autodesk Inventor to make the models in this game (from the rover to the platforms and attachments), Photoshop for editing pictures,
+										and C# with Unity to develop the game. Althought this was a solo project, I used Git for version control and Atlassian Jira for project management.</p>
 		
 									<p>Controls To Play Below:
 										<ul>
-											<li>Arrow Keys to move</li>
-											<li>'X' for weapon in A slot</li>
-											<li>'Z' for weapon in B slot</li>
-											<li>'Space' to switch B slot weapon</li>
-											<li>'4' to exit to Menu</li>
+											<li>Arrow Keys to rotate camera</li>
+											<li>WASD Keys to move rover</li>
+											<li>'E' to use rover laser</li>
+											<li>'Q' to reset rover</li>
+											<li>Mouse to use UI and interactable objects</li>
 										</ul>  
 									</p>
-
-
+									
 									<!-- Game Embedded -->
 									<div id="unity-container" style="text-align: center;" class="unity-desktop">
-										<canvas id="unity-canvas" width=48 height=48></canvas>
+										<canvas id="unity-canvas" width=1920 height=1080></canvas>
 										<div id="unity-loading-bar">
 										<div id="unity-logo"></div>
 										<div id="unity-progress-bar-empty">
@@ -82,14 +79,9 @@
 										<div id="unity-fullscreen-button"></div>
 										</div>
 									</div>
-
-
-									<p>In the original game, my contribution consisted of working on half of the enemy AI, locked door mechanics, enemy spawn and despawn (when moving through doors), and most of the animations. 
-										I also worked on ensuring level authenticity which consisted of making certain enemies drop keys, doors unlocking when enemies in room were defeated, and the special weapon spawns.
-									</p>
-									
-									<p>In the custom level, my contributions included the level design, developing the activation mechanic (cubes on plates activate wires, blocks, and doors), interactions with the moving cubes 
-										(attack to pull), and the portal link mechanics.
+		
+									<p>Some things I worked on include using Publisher/Subscriber as the main way for the game objects and UI to communicate with each other - clicking on buildplates or UI buttons triggers events that ensure
+										the buildplates store their respective data and that the UI displays the proper information. I also played around with the particle system and shader graph (to make the terrain).
 									</p>
 									
 								</div>
@@ -154,7 +146,7 @@
 						updateBannerVisibility();
 						}
 				
-						var buildUrl = "LoZBuild";
+						var buildUrl = "BlightfallBuild";
 						var loaderUrl = buildUrl + "/WebGL.loader.js";
 						var config = {
 						dataUrl: buildUrl + "/WebGL.data",
@@ -192,8 +184,8 @@
 						} else {
 						// Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 				
-						canvas.style.width = "440px";
-						canvas.style.height = "455px";
+						canvas.style.width = "960px";
+						canvas.style.height = "540px";
 						}
 				
 						loadingBar.style.display = "block";
