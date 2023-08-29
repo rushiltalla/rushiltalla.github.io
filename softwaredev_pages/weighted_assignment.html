@@ -46,19 +46,25 @@
 									<header class="major">
 										<h1>Weighted Assignment App</h1>
 									</header>
-									<p>The weighted assignment app is a tool that allows for assigning n number of people to n slots based on their preferences. This means each person can rank
+									<p>The weighted assignment app is a tool that allows for assigning n number of people to n slots based on their preferences. 
+										This means each person can select slots based on their preferences and the app will take all the data from all the people 
+										and find an optimal solution. An example of this being used is for assigning rooms of a house to people. The people will each
+										rank the rooms (or "slot" in the app) in order of preference and the data is inputed in the app. When "Run" is pressed, a 
+										final solution is displayed.
 									</p>
-		
-									<p> I used Autodesk Inventor to make the models in this game (from the rover to the platforms and attachments), Photoshop for editing pictures,
-										and C# with Unity to develop the game. Althought this was a solo project, I used Git for version control and Atlassian Jira for project management.</p>
-		
-									<p>Controls To Play Below:
+
+									<p>This app uses branch and bound as the central algorithm to find an optimal solution. It tries every possible combination but will
+										abort a solution in progress if the cost excedes the cost of the current best solution. This was originally written in C++ for me
+										to help decide room assignments for my roomates in our house but was later ported to C# so it could work with a Unity made UI system.
+									</p>
+								
+									<p>App User Guide:
 										<ul>
-											<li>Arrow Keys to rotate camera</li>
-											<li>WASD Keys to move rover</li>
-											<li>'E' to use rover laser</li>
-											<li>'Q' to reset rover</li>
-											<li>Mouse to use UI and interactable objects</li>
+											<li>First collect data from the people (their ranking of the slots)</li>
+											<li>Add the users name and slot id in the correct fields (left most means slot is higher priority)</li>
+											<li>Slot id starts at 1</li>
+											<li>Press run button to see results</li>
+											<li>Error will appear if slot id data is invalid</li>
 										</ul>  
 									</p>
 									
@@ -77,10 +83,8 @@
 										<div id="unity-fullscreen-button"></div>
 										</div>
 									</div>
-		
-									<p>Some things I worked on include using Publisher/Subscriber as the main way for the game objects and UI to communicate with each other - clicking on buildplates or UI buttons triggers events that ensure
-										the buildplates store their respective data and that the UI displays the proper information. I also played around with the particle system and shader graph (to make the terrain).
-									</p>
+
+									
 									
 								</div>
 							</section>
