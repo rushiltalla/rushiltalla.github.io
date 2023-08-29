@@ -44,53 +44,26 @@
 							<section id="one">
 								<div class="inner">
 									<header class="major">
-										<h1>The Legend of Zelda (NES) Remake</h1>
+										<h1>Search Engine</h1>
 									</header>
-									<span class="image main"><img src="../images/zelda_main.jpg" alt="" /></span>
-									<p>This is a remake of the first dungeon, "Eagle", from the Legend of Zelda for NES. This was developed over a course of three weeks as the first project of EECS 494 at the University of Michigan.
-										The dungeon was designed to have the authenticity of the original game, with the same weapons, enemies, and mechanics. Aside from replicating the original game, we were 
-										tasked with designing a custom level of our own that employed a new mechanic not seen in the Zelda franchise. Inspired by the thought of making a puzzle game, I
-										thought a dungeon based on using portals to solve puzzles would be a fun challenge to not only make, but also for players as they face interesting challenges in each room. 
+									<span class="image main"><img src="../images/SearchEngine_Cover.jpg" alt="" /></span>
+
+									<p>The Search Engine project consisted of making a scalable search engine similar to Google or Bing. It used information
+										retrival concepts like text analysis (tf-idf) and link analysis (Page Rank), and parallel data processing using 
+										distributed systems with MapReduce. The process was to create a segmented inverted index of web pages using a MapReduce
+										pipline made in Python. Results are returned to the user and the website is updated using REST API.
 									</p>
 
-									<p> I used Photoshop to make the sprites for all of the new game objects not found in the original level (The portals, portal gun, cube, wires, etc.)
-										and C# with Unity to develop the game. This was a team project so for version control we used Git and for project management we used Atlassian Jira.
+									<p>The map reduce system itself was created in python as well and consisted of a manager and workers
+										that could all run locally on different threads (hearbeat messages were used to monitor worker health). 
 									</p>
 		
-									<p>Controls To Play Below:
-										<ul>
-											<li>Arrow Keys to move</li>
-											<li>'X' for weapon in A slot</li>
-											<li>'Z' for weapon in B slot</li>
-											<li>'Space' to switch B slot weapon</li>
-											<li>'4' to exit to Menu</li>
-										</ul>  
+									<p> The main skills and tools needed for this project was use of Python, REST API, Java Script, HTML, and Distributed Systems. 
+										The text analysis was all handled using Python (using the common formulas required for the text analysis) and the Distributed Systems
+										setup for map reduce was created using threads and sockets in Python as well.
 									</p>
-
-
-									<!-- Game Embedded -->
-									<div id="unity-container" style="text-align: center;" class="unity-desktop">
-										<canvas id="unity-canvas" width=48 height=48></canvas>
-										<div id="unity-loading-bar">
-										<div id="unity-logo"></div>
-										<div id="unity-progress-bar-empty">
-											<div id="unity-progress-bar-full"></div>
-										</div>
-										</div>
-										<div id="unity-warning"> </div>
-										<div id="unity-footer">
-										<div id="unity-webgl-logo"></div>
-										<div id="unity-fullscreen-button"></div>
-										</div>
-									</div>
-
-
-									<p>In the original game, my contribution consisted of working on half of the enemy AI, locked door mechanics, enemy spawn and despawn (when moving through doors), and most of the animations. 
-										I also worked on ensuring level authenticity which consisted of making certain enemies drop keys, doors unlocking when enemies in room were defeated, and the special weapon spawns.
-									</p>
-									
-									<p>In the custom level, my contributions included the level design, developing the activation mechanic (cubes on plates activate wires, blocks, and doors), interactions with the moving cubes 
-										(attack to pull), and the portal link mechanics.
+		
+									<p>This allowed me to learn a lot about working with distributed systems and how to use them to handle large computations.
 									</p>
 									
 								</div>
