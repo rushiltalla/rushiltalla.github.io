@@ -20,6 +20,8 @@
             background-color: #ffffff; /* White background for the content */
             padding: 20px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+            max-width: 100%; /* Allow container to scale down on smaller screens */
+            box-sizing: border-box;
         }
 
         /* .recipe-header {
@@ -48,6 +50,8 @@
             height: 100%;
             object-fit: cover; /* Scale image to fill the container while cropping overflow */
             object-position: center; /* Center the image */
+            border-radius: 8px;
+
         }
 
         .recipe-container {
@@ -80,6 +84,17 @@
 
         ol, ul {
             padding-left: 20px;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 600px) {
+            .recipe-container {
+                flex-direction: column; /* Stack columns vertically */
+            }
+
+            .ingredients, .instructions {
+                width: 100%; /* Make each column full-width */
+            }
         }
     </style>
 </head>
