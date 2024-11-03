@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pie Crust</title>
+    <style>
+        body {
+            /* font-family: "Lucida Console", monospace; */
+            font-family: Garamond, serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Light grey background for wider screens */
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 800px; /* Fixed width for the entire content area */
+            background-color: #ffffff; /* White background for the content */
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+            max-width: 100%; /* Allow container to scale down on smaller screens */
+            box-sizing: border-box;
+        }
+
+        .recipe-header {
+            width: 100%;
+            height: 300px; /* Fixed height for the image container */
+            overflow: hidden; /* Crop overflow */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .recipe-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Scale image to fill the container while cropping overflow */
+            object-position: center; /* Center the image */
+            border-radius: 8px;
+
+        }
+
+        .title {
+            font-family: Papyrus, fantasy;
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+            margin: 0;
+            padding: 10px;
+            border-bottom: 2px solid #333;  /* Underline with border */
+            display: inline-block;  /* Allows for shorter underline */
+        }
+
+        .recipe-container {
+            display: flex;
+        }
+
+        .ingredients, .instructions {
+            width: 50%; /* Each column takes up 50% of the container width */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .ingredients {
+            background-color: #f5e9d4; /* Light beige color for ingredients */
+        }
+
+        .instructions {
+            background-color: #ffffff; /* White color for instructions */
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        h2, h3 {
+            margin-top: 10;
+        }
+
+        .servings-time {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        ol, ul {
+            padding-left: 20px;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 600px) {
+            .recipe-container {
+                flex-direction: column; /* Stack columns vertically */
+            }
+
+            .ingredients, .instructions {
+                width: 100%; /* Make each column full-width */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="recipe-header">
+            <img src="../images/banner_software.jpg" alt="Pumpkin Soup">
+        </div>
+
+        <div class="recipe-container">
+            <div class="ingredients">
+                <h1 class="title">Pie Crust</h1>
+                <div class="servings-time">
+                    <span>Servings: 2</span>
+                    <span>Time: 15 minutes</span>
+                </div>
+                <h2>Ingredients</h2>
+                <ul>
+                    
+                        <li>1 cup butter, softened</li>
+                    
+                        <li>1 cup white sugar</li>
+                    
+                        <li>1 cup brown sugar</li>
+                    
+                        <li>2 eggs</li>
+                    
+                        <li>2 tsp vanilla extract</li>
+                    
+                        <li>3 cups all-purpose flour</li>
+                    
+                        <li>1 tsp baking soda</li>
+                    
+                        <li>0.5 tsp salt</li>
+                    
+                        <li>2 cups semisweet chocolate chips</li>
+                    
+                </ul>
+            </div>
+            <div class="instructions">
+                <h2>Directions</h2>
+                <ol>
+                    
+                        <li>Preheat oven to 350°F (175°C).</li>
+                    
+                        <li>Cream together the butter and sugars until smooth.</li>
+                    
+                        <li>Beat in the eggs one at a time, then stir in the vanilla.</li>
+                    
+                        <li>Combine flour, baking soda, and salt; gradually blend into the creamed mixture.</li>
+                    
+                        <li>Stir in the chocolate chips by hand using a wooden spoon.</li>
+                    
+                        <li>Drop by rounded spoonfuls onto ungreased baking sheets.</li>
+                    
+                        <li>Bake for 8 to 10 minutes, or until golden brown.</li>
+                    
+                </ol>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
