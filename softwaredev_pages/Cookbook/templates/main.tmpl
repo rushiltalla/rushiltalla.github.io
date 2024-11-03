@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pie Crust</title>
+    <title>Recipes</title>
     <style>
         body {
             /* font-family: "Lucida Console", monospace; */
@@ -107,55 +107,17 @@
 
     <div class="container">
         <div class="recipe-header">
-            <img src="../images/banner_software.jpg" alt="Pumpkin Soup">
+            <img src="./images/banner_software.jpg" alt="Pumpkin Soup">
         </div>
 
-        <div class="recipe-container">
-            <div class="ingredients">
-                <h1 class="title">Pie Crust</h1>
-                <div class="servings-time">
-                    <span>Servings: 2</span>
-                    <span>Time: 15 minutes</span>
-                </div>
-                <h2>Equipment</h2>
-                <ul>
-                    
-                        <li>Rolling Pin</li>
-                    
-                </ul>
-                <h2>Ingredients</h2>
-                <ul>
-                    
-                        <li>2.5 cups all-purpose flour</li>
-                    
-                        <li>1 tbsp granulated sugar</li>
-                    
-                        <li>1 tsp salt</li>
-                    
-                        <li>1 cup very cold unsalted butter, cubed</li>
-                    
-                        <li>0.5 cup ice cold water</li>
-                    
-                </ul>
-            </div>
-            <div class="instructions">
-                <h2>Directions</h2>
-                <ol>
-                    
-                        <li>In a large mixing bowl, whisk the flour, sugar and salt.</li>
-                    
-                        <li>Add the cubed butter to the mixing bowl, and cut into the dry ingredients. Rub the pieces of butter between thumb, index, and middle fingers until the dough is pea-sized. Do not overwork the dough or allow it to get too warm!</li>
-                    
-                        <li>Slowly add ice water to dough, a couple of tbsp at a time, and mix using a wooden spoon. Add enough water until the dough comes together. It should hold its shape but also still look like a bunch of larger chunks (basically, just after there is no more powder at the bottom of the bowl). Do not overmix!</li>
-                    
-                        <li>Divide the dough in half, and flatten into two disks. Refrigerate for at least 30 minutes.</li>
-                    
-                        <li>Now, can use in any other pie recipe.</li>
-                    
-                </ol>
-            </div>
-        </div>
+        <h1 class="title">Recipes</h1>
+
+        {% for i in range(names | length) %}
+            <li><a href="./Recipes/{{ names[i] }}.html">{{ title[i] }}</a></li>
+        {% endfor %}
     </div>
+
+    
 
 </body>
 </html>

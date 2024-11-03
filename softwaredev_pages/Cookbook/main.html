@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pumpkin Soup Recipe</title>
+    <title>Recipes</title>
     <style>
         body {
             /* font-family: "Lucida Console", monospace; */
@@ -24,17 +24,6 @@
             box-sizing: border-box;
         }
 
-        /* .recipe-header {
-            text-align: center;
-            padding-bottom: 20px;
-        }
-
-        .recipe-header img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-        } */
-        
         .recipe-header {
             width: 100%;
             height: 300px; /* Fixed height for the image container */
@@ -52,6 +41,17 @@
             object-position: center; /* Center the image */
             border-radius: 8px;
 
+        }
+
+        .title {
+            font-family: Papyrus, fantasy;
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+            margin: 0;
+            padding: 10px;
+            border-bottom: 2px solid #333;  /* Underline with border */
+            display: inline-block;  /* Allows for shorter underline */
         }
 
         .recipe-container {
@@ -72,13 +72,18 @@
             background-color: #ffffff; /* White color for instructions */
         }
 
-        h2, h3 {
+        h1 {
             margin-top: 0;
+        }
+
+        h2, h3 {
+            margin-top: 10;
         }
 
         .servings-time {
             display: flex;
             justify-content: space-between;
+            margin-top: 10px;
             margin-bottom: 20px;
         }
 
@@ -102,38 +107,19 @@
 
     <div class="container">
         <div class="recipe-header">
-            <img src="../../images/banner_software.jpg" alt="Pumpkin Soup">
+            <img src="./images/banner_software.jpg" alt="Pumpkin Soup">
         </div>
 
-        <div class="recipe-container">
-            <div class="ingredients">
-                <h2>Ingredients</h2>
-                <div class="servings-time">
-                    <span>Servings: 2</span>
-                    <span>Time: 15 minutes</span>
-                </div>
-                <ul>
-                    <li>100 ml milk</li>
-                    <li>50 g butter</li>
-                    <li>3 eggs</li>
-                    <li>1 tbsp cocoa</li>
-                    <li>2 tsp baking soda</li>
-                    <li>A pinch of salt</li>
-                </ul>
-            </div>
-            <div class="instructions">
-                <h2>Directions</h2>
-                <ol>
-                    <li>Nunc nulla velit, feugiat vitae ex quis, lobortis porta leo.</li>
-                    <li>Donec dictum lectus in ex accumsan sodales. Pellentesque habitant morbi tristique.</li>
-                    <li>Nunc nulla velit, feugiat vitae ex quis, lobortis porta leo.</li>
-                    <li>Habitant morbi tristique. Nunc nulla velit, feugiat vitae ex quis.</li>
-                    <li>Donec dictum lectus in ex accumsan sodales. Pellentesque habitant morbi tristique.</li>
-                    <li>Nunc nulla velit, feugiat vitae ex quis, lobortis porta leo.</li>
-                </ol>
-            </div>
-        </div>
+        <h1 class="title">Recipes</h1>
+
+        
+            <li><a href="./Recipes/apple_blueberry_strawberry_pie.html">Apple Blueberry Strawberry Pie</a></li>
+        
+            <li><a href="./Recipes/pie_crust.html">Pie Crust</a></li>
+        
     </div>
+
+    
 
 </body>
 </html>

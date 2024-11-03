@@ -1,24 +1,21 @@
 {
-    "time": "15",
-    "servings": "2",
+    "time": "90",
+    "servings": "12",
+    "equipment": [
+      "Rolling Pin"
+    ],
     "ingredients": [
-      "1 cup butter, softened",
-      "1 cup white sugar",
-      "1 cup brown sugar",
-      "2 eggs",
-      "2 tsp vanilla extract",
-      "3 cups all-purpose flour",
-      "1 tsp baking soda",
-      "0.5 tsp salt",
-      "2 cups semisweet chocolate chips"
+      "2.5 cups all-purpose flour",
+      "1 tbsp granulated sugar",
+      "1 tsp salt",
+      "1 cup very cold unsalted butter, cubed",
+      "0.5 cup ice cold water"
     ],
     "steps": [
-      "Preheat oven to 350°F (175°C).",
-      "Cream together the butter and sugars until smooth.",
-      "Beat in the eggs one at a time, then stir in the vanilla.",
-      "Combine flour, baking soda, and salt; gradually blend into the creamed mixture.",
-      "Stir in the chocolate chips by hand using a wooden spoon.",
-      "Drop by rounded spoonfuls onto ungreased baking sheets.",
-      "Bake for 8 to 10 minutes, or until golden brown."
+      "In a large mixing bowl, whisk the flour, sugar and salt.",
+      "Add the cubed butter to the mixing bowl, and cut into the dry ingredients. Rub the pieces of butter between thumb, index, and middle fingers until the dough is pea-sized. Do not overwork the dough or allow it to get too warm!",
+      "Slowly add ice water to dough, a couple of tbsp at a time, and mix using a wooden spoon. Add enough water until the dough comes together. It should hold its shape but also still look like a bunch of larger chunks (basically, just after there is no more powder at the bottom of the bowl). Do not overmix!",
+      "Divide the dough in half, and flatten into two disks. Refrigerate for at least 30 minutes.",
+      "Now, can use in any other pie recipe."
     ]
 }
