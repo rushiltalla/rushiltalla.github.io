@@ -21,6 +21,7 @@ def gen_recipe(file_path):
     # Render the template with data from the JSON file
     output = template.render(
         title=base_name.replace("_", " ").title(),
+        name=base_name,
         time=data['time'],
         servings=data['servings'],
         equipment=data['equipment'],
