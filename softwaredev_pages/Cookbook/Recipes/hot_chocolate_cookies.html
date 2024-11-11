@@ -91,6 +91,11 @@
             padding-left: 20px;
         }
 
+        .strikethrough {
+            text-decoration: line-through;
+            color: #888;
+        }
+
         /* Media query for smaller screens */
         @media (max-width: 600px) {
             .recipe-container {
@@ -120,35 +125,35 @@
                 <h2>Equipment</h2>
                 <ul>
                     
-                        <li>Baking Tray</li>
+                        <li class="clickable">Baking Tray</li>
                     
                 </ul>
                 <h2>Ingredients</h2>
                 <ul>
                     
-                        <li>1/2 cup of unsalted butter, softened</li>
+                        <li class="clickable">1/2 cup of unsalted butter, softened</li>
                     
-                        <li>1/2 cup granulated sugar</li>
+                        <li class="clickable">1/2 cup granulated sugar</li>
                     
-                        <li>1/2 cup brown sugar, packed</li>
+                        <li class="clickable">1/2 cup brown sugar, packed</li>
                     
-                        <li>2 tbsp vanilla extract</li>
+                        <li class="clickable">2 tbsp vanilla extract</li>
                     
-                        <li>1 large egg</li>
+                        <li class="clickable">1 large egg</li>
                     
-                        <li>1/4 cup chocolate syrup</li>
+                        <li class="clickable">1/4 cup chocolate syrup</li>
                     
-                        <li>1.5 cups all-purpose flour</li>
+                        <li class="clickable">1.5 cups all-purpose flour</li>
                     
-                        <li>1/2 tsp baking soda</li>
+                        <li class="clickable">1/2 tsp baking soda</li>
                     
-                        <li>1/4 tsp baking powder</li>
+                        <li class="clickable">1/4 tsp baking powder</li>
                     
-                        <li>1/2 tsp salt</li>
+                        <li class="clickable">1/2 tsp salt</li>
                     
-                        <li>1/4 cup hot chocolate powder</li>
+                        <li class="clickable">1/4 cup hot chocolate powder</li>
                     
-                        <li>1 cup chocolate chips</li>
+                        <li class="clickable">1 cup chocolate chips</li>
                     
                 </ul>
             </div>
@@ -156,32 +161,43 @@
                 <h2>Directions</h2>
                 <ol>
                     
-                        <li>In a medium sized bowl, mix the flour, baking soda, baking powder, salt, and hot chocolate powder.</li>
+                        <li class="clickable">In a medium sized bowl, mix the flour, baking soda, baking powder, salt, and hot chocolate powder.</li>
                     
-                        <li>In a different bowl, cream together the softened butter, granulated sugar, and brown sugar. It should form a combined slurry.</li>
+                        <li class="clickable">In a different bowl, cream together the softened butter, granulated sugar, and brown sugar. It should form a combined slurry.</li>
                     
-                        <li>Beat the egg, vanilla, and chocolate syrup into the butter-sugar mixture.</li>
+                        <li class="clickable">Beat the egg, vanilla, and chocolate syrup into the butter-sugar mixture.</li>
                     
-                        <li>Mix the wet and dry ingredients until combined.</li>
+                        <li class="clickable">Mix the wet and dry ingredients until combined.</li>
                     
-                        <li>Add chocolate chips and mix well.</li>
+                        <li class="clickable">Add chocolate chips and mix well.</li>
                     
-                        <li>Roll the dough into 6 balls (or more for smaller cookies) and place on a plate. Press the balls slightly so they look more like disks</li>
+                        <li class="clickable">Roll the dough into 6 balls (or more for smaller cookies) and place on a plate. Press the balls slightly so they look more like disks</li>
                     
-                        <li>Refrigerate for at least 30 minutes (helps keep their shape).</li>
+                        <li class="clickable">Refrigerate for at least 30 minutes (helps keep their shape).</li>
                     
-                        <li>Preheat oven to 375°F. Line the baking tray with parchment paper.</li>
+                        <li class="clickable">Preheat oven to 375°F. Line the baking tray with parchment paper.</li>
                     
-                        <li>Remove dough from fridge and move to the baking tray.</li>
+                        <li class="clickable">Remove dough from fridge and move to the baking tray.</li>
                     
-                        <li>Bake in the oven for about 10 minutes, poke center of a cookie with a toothpick/fork test. The fork should be mostly clean (ignore chocolate); take the cookies out before they are fully cooked as they continue to cook as they cool.</li>
+                        <li class="clickable">Bake in the oven for about 10 minutes, poke center of a cookie with a toothpick/fork test. The fork should be mostly clean (ignore chocolate); take the cookies out before they are fully cooked as they continue to cook as they cool.</li>
                     
-                        <li>Let them sit on the baking tray for 8 minutes before moving to a cooling rack.</li>
+                        <li class="clickable">Let them sit on the baking tray for 8 minutes before moving to a cooling rack.</li>
                     
                 </ol>
             </div>
         </div>
     </div>
+
+
+    <script>
+        // Add event listeners to items that should be clickable
+        document.querySelectorAll('.clickable').forEach(item => {
+            item.addEventListener('click', () => {
+                // Toggle the strikethrough effect
+                item.classList.toggle('strikethrough');
+            });
+        });
+    </script>
 
 </body>
 </html>

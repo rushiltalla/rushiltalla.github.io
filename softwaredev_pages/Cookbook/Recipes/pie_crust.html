@@ -91,6 +91,11 @@
             padding-left: 20px;
         }
 
+        .strikethrough {
+            text-decoration: line-through;
+            color: #888;
+        }
+
         /* Media query for smaller screens */
         @media (max-width: 600px) {
             .recipe-container {
@@ -120,21 +125,21 @@
                 <h2>Equipment</h2>
                 <ul>
                     
-                        <li>Rolling Pin</li>
+                        <li class="clickable">Rolling Pin</li>
                     
                 </ul>
                 <h2>Ingredients</h2>
                 <ul>
                     
-                        <li>2.5 cups all-purpose flour</li>
+                        <li class="clickable">2.5 cups all-purpose flour</li>
                     
-                        <li>1 tbsp granulated sugar</li>
+                        <li class="clickable">1 tbsp granulated sugar</li>
                     
-                        <li>1 tsp salt</li>
+                        <li class="clickable">1 tsp salt</li>
                     
-                        <li>1 cup very cold unsalted butter, cubed</li>
+                        <li class="clickable">1 cup very cold unsalted butter, cubed</li>
                     
-                        <li>0.5 cup ice cold water</li>
+                        <li class="clickable">0.5 cup ice cold water</li>
                     
                 </ul>
             </div>
@@ -142,20 +147,31 @@
                 <h2>Directions</h2>
                 <ol>
                     
-                        <li>In a large mixing bowl, whisk the flour, sugar and salt.</li>
+                        <li class="clickable">In a large mixing bowl, whisk the flour, sugar and salt.</li>
                     
-                        <li>Add the cubed butter to the mixing bowl, and cut into the dry ingredients. Rub the pieces of butter between thumb, index, and middle fingers until the dough is pea-sized. Do not overwork the dough or allow it to get too warm!</li>
+                        <li class="clickable">Add the cubed butter to the mixing bowl, and cut into the dry ingredients. Rub the pieces of butter between thumb, index, and middle fingers until the dough is pea-sized. Do not overwork the dough or allow it to get too warm!</li>
                     
-                        <li>Slowly add ice water to dough, a couple of tbsp at a time, and mix using a wooden spoon. Add enough water until the dough comes together. It should hold its shape but also still look like a bunch of larger chunks (basically, just after there is no more powder at the bottom of the bowl). Do not overmix!</li>
+                        <li class="clickable">Slowly add ice water to dough, a couple of tbsp at a time, and mix using a wooden spoon. Add enough water until the dough comes together. It should hold its shape but also still look like a bunch of larger chunks (basically, just after there is no more powder at the bottom of the bowl). Do not overmix!</li>
                     
-                        <li>Divide the dough in half, and flatten into two disks. Refrigerate for at least 30 minutes.</li>
+                        <li class="clickable">Divide the dough in half, and flatten into two disks. Refrigerate for at least 30 minutes.</li>
                     
-                        <li>Now, can use in any other pie recipe.</li>
+                        <li class="clickable">Now, can use in any other pie recipe.</li>
                     
                 </ol>
             </div>
         </div>
     </div>
+
+
+    <script>
+        // Add event listeners to items that should be clickable
+        document.querySelectorAll('.clickable').forEach(item => {
+            item.addEventListener('click', () => {
+                // Toggle the strikethrough effect
+                item.classList.toggle('strikethrough');
+            });
+        });
+    </script>
 
 </body>
 </html>

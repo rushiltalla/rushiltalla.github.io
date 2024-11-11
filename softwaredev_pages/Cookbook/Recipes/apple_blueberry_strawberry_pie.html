@@ -91,6 +91,11 @@
             padding-left: 20px;
         }
 
+        .strikethrough {
+            text-decoration: line-through;
+            color: #888;
+        }
+
         /* Media query for smaller screens */
         @media (max-width: 600px) {
             .recipe-container {
@@ -120,33 +125,33 @@
                 <h2>Equipment</h2>
                 <ul>
                     
-                        <li>9-in pie dish</li>
+                        <li class="clickable">9-in pie dish</li>
                     
                 </ul>
                 <h2>Ingredients</h2>
                 <ul>
                     
-                        <li>2 pie dough disks</li>
+                        <li class="clickable">2 pie dough disks</li>
                     
-                        <li>4 cups apples, peeled and thinly sliced</li>
+                        <li class="clickable">4 cups apples, peeled and thinly sliced</li>
                     
-                        <li>2 cups blueberries</li>
+                        <li class="clickable">2 cups blueberries</li>
                     
-                        <li>1 cup strawberries, sliced</li>
+                        <li class="clickable">1 cup strawberries, sliced</li>
                     
-                        <li>1/2 cup granulated sugar</li>
+                        <li class="clickable">1/2 cup granulated sugar</li>
                     
-                        <li>1 tsp lemon zest</li>
+                        <li class="clickable">1 tsp lemon zest</li>
                     
-                        <li>2 tbsp lemon juice</li>
+                        <li class="clickable">2 tbsp lemon juice</li>
                     
-                        <li>3 tbsp cornstarch</li>
+                        <li class="clickable">3 tbsp cornstarch</li>
                     
-                        <li>2 tsp cinnamon</li>
+                        <li class="clickable">2 tsp cinnamon</li>
                     
-                        <li>pinch of salt</li>
+                        <li class="clickable">pinch of salt</li>
                     
-                        <li>1 egg + 1 tsp milk (eggwash)</li>
+                        <li class="clickable">1 egg + 1 tsp milk (eggwash)</li>
                     
                 </ul>
             </div>
@@ -154,32 +159,43 @@
                 <h2>Directions</h2>
                 <ol>
                     
-                        <li>Preheat oven to 400°F.</li>
+                        <li class="clickable">Preheat oven to 400°F.</li>
                     
-                        <li>Remove a pie dough disk from the fridge, roll it out to fit the size of the pie dish.</li>
+                        <li class="clickable">Remove a pie dough disk from the fridge, roll it out to fit the size of the pie dish.</li>
                     
-                        <li>Carefully lay the rolled dough onto the pie dish, allowing it to fall into place as it starts to warm. Put it back in the fridge to keep it cold.</li>
+                        <li class="clickable">Carefully lay the rolled dough onto the pie dish, allowing it to fall into place as it starts to warm. Put it back in the fridge to keep it cold.</li>
                     
-                        <li>Take out the other pie disk, and roll it out to be 2 inch larger than the pie disk. Cut it into 1 in wide strips, then put back in fridge.</li>
+                        <li class="clickable">Take out the other pie disk, and roll it out to be 2 inch larger than the pie disk. Cut it into 1 in wide strips, then put back in fridge.</li>
                     
-                        <li>In a large mixing bowl, combine the apples, blueberries, strawberries, sugar, lemon zest, lemon juice, cornstarch, cinnamon, and salt and mix well.</li>
+                        <li class="clickable">In a large mixing bowl, combine the apples, blueberries, strawberries, sugar, lemon zest, lemon juice, cornstarch, cinnamon, and salt and mix well.</li>
                     
-                        <li>If there is excess liquid from the fruit mixture, pour and reduce the liquid in a pan until it thickens.</li>
+                        <li class="clickable">If there is excess liquid from the fruit mixture, pour and reduce the liquid in a pan until it thickens.</li>
                     
-                        <li>Add the fruit mixture to the chilled pie crust.</li>
+                        <li class="clickable">Add the fruit mixture to the chilled pie crust.</li>
                     
-                        <li>Layer the dough strips above the pie to form a lattice.</li>
+                        <li class="clickable">Layer the dough strips above the pie to form a lattice.</li>
                     
-                        <li>Brush the crust with egg wash and sprinkle with coarse sugar.</li>
+                        <li class="clickable">Brush the crust with egg wash and sprinkle with coarse sugar.</li>
                     
-                        <li>Bake in bottom third of the oven at 400°F for 20 min, then 375°F for about 30 additional min, or until pie is browned and bubbly.</li>
+                        <li class="clickable">Bake in bottom third of the oven at 400°F for 20 min, then 375°F for about 30 additional min, or until pie is browned and bubbly.</li>
                     
-                        <li>Allow pie to cool completely before slicing and serving.</li>
+                        <li class="clickable">Allow pie to cool completely before slicing and serving.</li>
                     
                 </ol>
             </div>
         </div>
     </div>
+
+
+    <script>
+        // Add event listeners to items that should be clickable
+        document.querySelectorAll('.clickable').forEach(item => {
+            item.addEventListener('click', () => {
+                // Toggle the strikethrough effect
+                item.classList.toggle('strikethrough');
+            });
+        });
+    </script>
 
 </body>
 </html>
