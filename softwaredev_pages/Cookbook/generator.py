@@ -35,6 +35,8 @@ def gen_recipe(file_path):
 
 # Generate main file
 def gen_main(files):
+    print(f"- Generating main.html")
+
     base_names = [f.replace(".json", "") for f in files]
 
     # Set up Jinja2 environment and load the template

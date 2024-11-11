@@ -21,6 +21,7 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             max-width: 100%;
             box-sizing: border-box;
+            text-align: center;
         }
 
         .recipe-header {
@@ -43,7 +44,6 @@
 
         .title {
             font-family: Papyrus, fantasy;
-            text-align: center;
             font-size: 2em;
             color: #333;
             margin: 0;
@@ -87,6 +87,22 @@
             margin-top: 10px;
         }
 
+        .random-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .random-button:hover {
+            background-color: #555;
+        }
+
         /* Media query for smaller screens */
         @media (max-width: 600px) {
             .recipes-grid {
@@ -108,7 +124,12 @@
             <img src="./images/main.png" alt="Main Recipe Image">
         </div>
 
-        <h1 class="title">Recipes</h1>
+        <div>
+            <h1 class="title">Recipes</h1>
+        </div>
+
+        <!-- Button to open a random recipe -->
+        <button class="random-button" onclick="openRandomRecipe()">Random</button>
 
         <div class="recipes-grid">
             {% for i in range(names | length) %}
@@ -121,6 +142,22 @@
             {% endfor %}
         </div>
     </div>
+
+
+    <script>
+        // Array of recipe URLs
+        const recipeUrls = [
+            {% for name in names %}
+            './Recipes/{{ name }}.html'{{ ", " if not loop.last }}
+            {% endfor %}
+        ];
+
+        // Function to open a random recipe
+        function openRandomRecipe() {
+            const randomIndex = Math.floor(Math.random() * recipeUrls.length);
+            window.location.href = recipeUrls[randomIndex];
+        }
+    </script>
 
 </body>
 </html>

@@ -1,0 +1,30 @@
+{
+    "time": "65",
+    "servings": "1 loaf",
+    "equipment": [
+      "Loaf Pan",
+      "Rubber Spatula"
+    ],
+    "ingredients": [
+      "1/2 cup butter, melted",
+      "3 large ripe bananas",
+      "2 large eggs",
+      "1 tsp vanilla extract",
+      "2 cups all purpose flour",
+      "1 cup granulated sugar",
+      "1 tsp baking soda",
+      "1/2 teaspoon salt",
+      "1/2 teaspoon cinnamon",
+      "1/2 cup chocolate chips"
+    ],
+    "steps": [
+      "Preheat oven to 350°F.",
+      "In a bowl, add butter and peeled bananas. Mash with a fork.",
+      "Add vanilla extract and egg, stir until no yellow streaks of egg remain.",
+      "In a separate large bowl, mix the flour, sugar, baking soda, salt, and cinnamon.",
+      "Add the wet ingredients to the dry ingredients and mix together until combined.",
+      "Pour the batter into the loaf pan and sprinkle chocolate chips on top.",
+      "Bake for 45-55 minutes, until poke test in center comes out clean.",
+      "Let it sit until cool."
+    ]
+}
