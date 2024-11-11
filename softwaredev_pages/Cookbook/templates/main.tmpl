@@ -52,6 +52,16 @@
             display: inline-block;
         }
 
+        .search-bar {
+            margin: 20px 0;
+            padding: 10px;
+            width: 100%;
+            max-width: 400px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
         .recipes-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -128,12 +138,15 @@
             <h1 class="title">Recipes</h1>
         </div>
 
+        <!-- Search bar -->
+        <input type="text" class="search-bar" id="searchBar" placeholder="Search recipes..." onkeyup="filterRecipes()">
+
         <!-- Button to open a random recipe -->
         <button class="random-button" onclick="openRandomRecipe()">Random</button>
 
-        <div class="recipes-grid">
+        <div class="recipes-grid" id="recipesGrid">
             {% for i in range(names | length) %}
-            <div class="recipe-item">
+            <div class="recipe-item" data-name="{{ title[i] }}">
                 <a href="./Recipes/{{ names[i] }}.html">
                     <img src="./images/{{ names[i] }}.png" alt="Missing Image">
                     {{ title[i] }}
@@ -156,6 +169,21 @@
         function openRandomRecipe() {
             const randomIndex = Math.floor(Math.random() * recipeUrls.length);
             window.location.href = recipeUrls[randomIndex];
+        }
+
+        // Function to filter recipes based on search input
+        function filterRecipes() {
+            const searchInput = document.getElementById("searchBar").value.toLowerCase();
+            const recipeItems = document.getElementsByClassName("recipe-item");
+
+            for (let i = 0; i < recipeItems.length; i++) {
+                const recipeName = recipeItems[i].getAttribute("data-name").toLowerCase();
+                if (recipeName.includes(searchInput)) {
+                    recipeItems[i].style.display = "block";
+                } else {
+                    recipeItems[i].style.display = "none";
+                }
+            }
         }
     </script>
 
