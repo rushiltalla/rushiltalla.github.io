@@ -34,8 +34,9 @@ def gen_recipe(file_path):
         output_file.write(output)
 
 # Generate main file
-def gen_main(files):
+def gen_main(folder_path):
     print(f"- Generating main.html")
+    files = os.listdir(folder_path)
 
     base_names = [f.replace(".json", "") for f in files]
 
@@ -43,9 +44,22 @@ def gen_main(files):
     env = Environment(loader=FileSystemLoader('./templates'))
     template = env.get_template('main.tmpl')
 
+    tags = []
+    for f in files:
+        with open(os.path.join(folder_path, f)) as data:
+            recipe = json.load(data)
+
+            tag = ""
+            for s in recipe["tags"]:
+                tag = tag + s + ","
+            
+            # Add to tags
+            tags.append(tag[0:-1])
+
     # Render the template with data from the JSON file
     output = template.render(
         title=[f.replace("_", " ").title() for f in base_names],
+        tags=tags,
         names=base_names
     )
 
@@ -61,7 +75,7 @@ def read_recipes(folder_path):
 
         gen_recipe(file_path)
 
-    gen_main(os.listdir(folder_path))
+    gen_main(folder_path)
 
 
 if __name__ == "__main__":

@@ -62,6 +62,25 @@
             border-radius: 8px;
         }
 
+        .filter-buttons {
+            margin: 5px 0;
+        }
+
+        .filter-button {
+            margin: 5px;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 8px;
+            background-color: #929292;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .filter-button.active {
+            background-color: #343434;
+        }
+
         .recipes-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -120,7 +139,7 @@
             }
         }
 
-        @media (max-width: 400px) {
+        @media (max-width: 300px) {
             .recipes-grid {
                 grid-template-columns: 1fr;
             }
@@ -144,9 +163,17 @@
         <!-- Button to open a random recipe -->
         <button class="random-button" onclick="openRandomRecipe()">Random</button>
 
+        <!-- Filter buttons -->
+        <div class="filter-buttons">
+            <button class="filter-button" onclick="toggleFilter('Breakfast')">Breakfast</button>
+            <button class="filter-button" onclick="toggleFilter('Main')">Main</button>
+            <button class="filter-button" onclick="toggleFilter('Dessert')">Dessert</button>
+            <button class="filter-button" onclick="toggleFilter('Vegetarian')">Vegetarian</button>
+        </div>
+
         <div class="recipes-grid" id="recipesGrid">
             {% for i in range(names | length) %}
-            <div class="recipe-item" data-name="{{ title[i] }}">
+            <div class="recipe-item" data-name="{{ title[i] }}" data-tags="{{ tags[i] }}">
                 <a href="./Recipes/{{ names[i] }}.html">
                     <img src="./images/{{ names[i] }}.png" alt="Missing Image">
                     {{ title[i] }}
@@ -158,33 +185,74 @@
 
 
     <script>
-        // Array of recipe URLs
-        const recipeUrls = [
-            {% for name in names %}
-            './Recipes/{{ name }}.html'{{ ", " if not loop.last }}
-            {% endfor %}
-        ];
+        const activeFilters = new Set();
+        const exclusiveTags = ["Breakfast", "Main", "Dessert"];
 
-        // Function to open a random recipe
         function openRandomRecipe() {
-            const randomIndex = Math.floor(Math.random() * recipeUrls.length);
-            window.location.href = recipeUrls[randomIndex];
+            let visibleRecipes;
+
+            if (activeFilters.size === 0) {
+                // No filters selected, consider all recipes
+                visibleRecipes = Array.from(document.querySelectorAll(".recipe-item a"))
+                    .map(recipeLink => recipeLink.getAttribute("href"));
+            } else {
+                // Filters are active, only consider visible recipes
+                visibleRecipes = Array.from(document.querySelectorAll(".recipe-item"))
+                    .filter(recipe => recipe.style.display === "block")
+                    .map(recipe => recipe.querySelector("a").getAttribute("href"));
+            }
+
+            if (visibleRecipes.length > 0) {
+                const randomIndex = Math.floor(Math.random() * visibleRecipes.length);
+                window.location.href = visibleRecipes[randomIndex];
+            } else {
+                alert("No recipes match the current filters.");
+            }
         }
 
-        // Function to filter recipes based on search input
+        function toggleFilter(tag) {
+            const button = Array.from(document.getElementsByClassName("filter-button"))
+                                .find(btn => btn.innerText === tag);
+
+            if (activeFilters.has(tag)) {
+                activeFilters.delete(tag);
+                button.classList.remove("active");
+            } else {
+                // If the selected tag is in the exclusive group, deactivate other exclusive tags
+                if (exclusiveTags.includes(tag)) {
+                    exclusiveTags.forEach(exclusiveTag => {
+                        if (activeFilters.has(exclusiveTag) && exclusiveTag !== tag) {
+                            activeFilters.delete(exclusiveTag);
+                            const otherButton = Array.from(document.getElementsByClassName("filter-button"))
+                                                    .find(btn => btn.innerText === exclusiveTag);
+                            otherButton.classList.remove("active");
+                        }
+                    });
+                }
+                activeFilters.add(tag);
+                button.classList.add("active");
+            }
+            filterRecipes();
+        }
+
         function filterRecipes() {
             const searchInput = document.getElementById("searchBar").value.toLowerCase();
             const recipeItems = document.getElementsByClassName("recipe-item");
 
             for (let i = 0; i < recipeItems.length; i++) {
                 const recipeName = recipeItems[i].getAttribute("data-name").toLowerCase();
-                if (recipeName.includes(searchInput)) {
-                    recipeItems[i].style.display = "block";
-                } else {
-                    recipeItems[i].style.display = "none";
-                }
+                const recipeTags = recipeItems[i].getAttribute("data-tags").split(",");
+
+                const matchesSearch = recipeName.includes(searchInput);
+                
+                // Adjust filter matching to check each selected filter, including "Vegetarian"
+                const matchesFilters = Array.from(activeFilters).every(filter => recipeTags.includes(filter));
+
+                // Show the recipe if it matches both the search and all selected filters
+                recipeItems[i].style.display = matchesSearch && matchesFilters ? "block" : "none";
             }
         }
+
     </script>
 
 </body>

@@ -1,6 +1,10 @@
 {
     "time": "60",
     "servings": "6 cookies",
+    "tags": [
+      "Dessert",
+      "Vegetarian"
+    ],
     "equipment": [
       "Baking Tray"
     ],

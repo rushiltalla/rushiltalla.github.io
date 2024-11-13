@@ -1,6 +1,10 @@
 {
     "time": "65",
     "servings": "1 loaf",
+    "tags": [
+      "Dessert",
+      "Vegetarian"
+    ],
     "equipment": [
       "Loaf Pan",
       "Rubber Spatula"
