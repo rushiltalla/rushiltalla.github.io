@@ -168,6 +168,12 @@
             <button class="filter-button" onclick="toggleFilter('Breakfast')">Breakfast</button>
             <button class="filter-button" onclick="toggleFilter('Main')">Main</button>
             <button class="filter-button" onclick="toggleFilter('Dessert')">Dessert</button>
+            <button class="filter-button" onclick="toggleFilter('Sauce')">Sauce</button>
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-button" onclick="toggleFilter('Sweet')">Sweet</button>
+            <button class="filter-button" onclick="toggleFilter('Savory')">Savory</button>
             <button class="filter-button" onclick="toggleFilter('Vegetarian')">Vegetarian</button>
         </div>
 
@@ -186,7 +192,7 @@
 
     <script>
         const activeFilters = new Set();
-        const exclusiveTags = ["Breakfast", "Main", "Dessert"];
+        const exclusiveTags = ["Breakfast", "Main", "Dessert", "Sauce"];
 
         function openRandomRecipe() {
             let visibleRecipes;

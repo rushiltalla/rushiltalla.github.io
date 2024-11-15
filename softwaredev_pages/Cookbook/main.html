@@ -168,43 +168,70 @@
             <button class="filter-button" onclick="toggleFilter('Breakfast')">Breakfast</button>
             <button class="filter-button" onclick="toggleFilter('Main')">Main</button>
             <button class="filter-button" onclick="toggleFilter('Dessert')">Dessert</button>
+            <button class="filter-button" onclick="toggleFilter('Sauce')">Sauce</button>
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-button" onclick="toggleFilter('Sweet')">Sweet</button>
+            <button class="filter-button" onclick="toggleFilter('Savory')">Savory</button>
             <button class="filter-button" onclick="toggleFilter('Vegetarian')">Vegetarian</button>
         </div>
 
         <div class="recipes-grid" id="recipesGrid">
             
-            <div class="recipe-item" data-name="Apple Blueberry Strawberry Pie" data-tags="Dessert,Vegetarian">
+            <div class="recipe-item" data-name="Apple Blueberry Strawberry Pie" data-tags="Dessert,Vegetarian,Sweet">
                 <a href="./Recipes/apple_blueberry_strawberry_pie.html">
                     <img src="./images/apple_blueberry_strawberry_pie.png" alt="Missing Image">
                     Apple Blueberry Strawberry Pie
                 </a>
             </div>
             
-            <div class="recipe-item" data-name="Banana Bread" data-tags="Dessert,Vegetarian">
+            <div class="recipe-item" data-name="Banana Bread" data-tags="Dessert,Breakfast,Sweet">
                 <a href="./Recipes/banana_bread.html">
                     <img src="./images/banana_bread.png" alt="Missing Image">
                     Banana Bread
                 </a>
             </div>
             
-            <div class="recipe-item" data-name="Hot Chocolate Cookies" data-tags="Dessert,Vegetarian">
+            <div class="recipe-item" data-name="Buttermilk Biscuits" data-tags="Breakfast,Vegetarian,Savory">
+                <a href="./Recipes/buttermilk_biscuits.html">
+                    <img src="./images/buttermilk_biscuits.png" alt="Missing Image">
+                    Buttermilk Biscuits
+                </a>
+            </div>
+            
+            <div class="recipe-item" data-name="Chocolate Chip Cookies" data-tags="Dessert,Sweet">
+                <a href="./Recipes/chocolate_chip_cookies.html">
+                    <img src="./images/chocolate_chip_cookies.png" alt="Missing Image">
+                    Chocolate Chip Cookies
+                </a>
+            </div>
+            
+            <div class="recipe-item" data-name="Hot Chocolate Cookies" data-tags="Dessert,Sweet">
                 <a href="./Recipes/hot_chocolate_cookies.html">
                     <img src="./images/hot_chocolate_cookies.png" alt="Missing Image">
                     Hot Chocolate Cookies
                 </a>
             </div>
             
-            <div class="recipe-item" data-name="Mango Pie" data-tags="Dessert">
+            <div class="recipe-item" data-name="Mango Pie" data-tags="Dessert,Sweet">
                 <a href="./Recipes/mango_pie.html">
                     <img src="./images/mango_pie.png" alt="Missing Image">
                     Mango Pie
                 </a>
             </div>
             
-            <div class="recipe-item" data-name="Pie Crust" data-tags="Dessert,Vegetarian">
+            <div class="recipe-item" data-name="Pie Crust" data-tags="Dessert,Vegetarian,Sweet">
                 <a href="./Recipes/pie_crust.html">
                     <img src="./images/pie_crust.png" alt="Missing Image">
                     Pie Crust
+                </a>
+            </div>
+            
+            <div class="recipe-item" data-name="Strawberry Compote" data-tags="Sauce,Breakfast,Dessert,Vegetarian,Sweet">
+                <a href="./Recipes/strawberry_compote.html">
+                    <img src="./images/strawberry_compote.png" alt="Missing Image">
+                    Strawberry Compote
                 </a>
             </div>
             
@@ -214,7 +241,7 @@
 
     <script>
         const activeFilters = new Set();
-        const exclusiveTags = ["Breakfast", "Main", "Dessert"];
+        const exclusiveTags = ["Breakfast", "Main", "Dessert", "Sauce"];
 
         function openRandomRecipe() {
             let visibleRecipes;
