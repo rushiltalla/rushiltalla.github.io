@@ -363,7 +363,7 @@
     function resizeKeyboard(event) {
       if (isDragging) {
         const viewportHeight = window.innerHeight;
-        const mouseY = true ? event.clientY : event.touches[0].clientY;
+        const mouseY = event.type === 'mousemove' ? event.clientY : event.touches[0].clientY;
         const newHeight = Math.max(300, Math.min(600, viewportHeight - mouseY + 300));
 
         keyboardContainer.style.setProperty('--keyboard-height', `${newHeight}px`);
