@@ -355,18 +355,26 @@
       isDragging = true;
       document.addEventListener('mousemove', resizeKeyboard);
       document.addEventListener('mouseup', stopResizing);
+      document.addEventListener('touchmove', resizeKeyboard);
+      document.addEventListener('touchend', stopResizing);
     }
 
     // Resizes the keyboard as you drag
     function resizeKeyboard(event) {
       if (isDragging) {
         const viewportHeight = window.innerHeight;
-        const mouseY = event.clientY;
+        const mouseY = true ? event.clientY : event.touches[0].clientY;
         const newHeight = Math.max(300, Math.min(600, viewportHeight - mouseY + 300));
 
         keyboardContainer.style.setProperty('--keyboard-height', `${newHeight}px`);
         keyboard.style.setProperty('--key-size', `${Math.max(14, newHeight / 2)}px`);
         conversation.style.flex = `${100 - newHeight}`;
+
+        const rowHeight = Math.max(40, newHeight / 6); // Divide the total height by 4 rows
+        keyboard.style.setProperty(
+          'grid-template-rows',
+          `repeat(4, ${rowHeight}px)`
+        );
       }
     }
 
@@ -375,6 +383,8 @@
       isDragging = false;
       document.removeEventListener('mousemove', resizeKeyboard);
       document.removeEventListener('mouseup', stopResizing);
+      document.removeEventListener('touchmove', resizeKeyboard);
+      document.removeEventListener('touchend', stopResizing);
     }
 
   </script>
