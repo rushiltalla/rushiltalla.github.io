@@ -69,6 +69,8 @@
       justify-content: center;
       flex-shrink: 0;
       padding: 10px;
+      height: var(--keyboard-height, 300px);
+      transition: height 0.3s ease;
     }
 
     .keyboard {
@@ -178,6 +180,29 @@
       }
     }
 
+    /* -=-=--=-=- DRAG -=-=-=-= */
+    .drag-button {
+      width: 100%;
+      text-align: center;
+      cursor: grab;
+      font-size: 16px;
+      background-color: #d1d1d6;
+      padding: 10px 0;
+      user-select: none;
+    }
+
+    .slider-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
+    }
+
+    .slider {
+      width: 80%;
+    }
+
   </style>
 </head>
 <body>
@@ -187,13 +212,13 @@
       🎥 📞 
     </div>
   </div>
-  <div class="conversation">
+  <div class="conversation" id="conversation">
     <div class="message received">Did you finish the report?</div>
     <div class="message sent">No not yet.</div>
     <div class="message sent">Can you work on it?</div>
     <div class="message received">Yeah what parts?</div>
   </div>
-  <div class="keyboard-container">
+  <div class="keyboard-container" id="keyboard-container">
     <textarea id="message" placeholder="Message..." readonly></textarea>
     <div class="keyboard" id="keyboard">
       <!-- Top Row -->
@@ -237,7 +262,9 @@
       <button class="key key-sides" onclick="typeKey('\n')">return</button>
     </div>
   </div>
-
+  <div class="drag-button" id="drag-button" ondblclick="resetKeyboard()" onmousedown="startResizing(event)">
+    <  +/-  >
+  </div>
   <div class="slider-container">
     <input 
       id="alignment-slider" 
@@ -305,6 +332,49 @@
         keyboard.style.setProperty("margin-right", "auto");
         keyboard.style.setProperty("margin-left", "auto");
       }
+    }
+
+
+
+    const keyboardContainer = document.getElementById('keyboard-container');
+    const conversation = document.getElementById('conversation');
+    const dragButton = document.getElementById('drag-button');
+    let isDragging = false;
+
+    // Resets the keyboard height, key size, and alignment
+    function resetKeyboard() {
+      keyboardContainer.style.setProperty('--keyboard-height', '300px');
+      keyboard.style.setProperty('--key-size', '20px');
+      conversation.style.flex = '1';
+      adjustKeyboardAlignment(50);
+      document.getElementById('alignment-slider').value = 50;
+    }
+
+    // Starts resizing on mousedown
+    function startResizing(event) {
+      isDragging = true;
+      document.addEventListener('mousemove', resizeKeyboard);
+      document.addEventListener('mouseup', stopResizing);
+    }
+
+    // Resizes the keyboard as you drag
+    function resizeKeyboard(event) {
+      if (isDragging) {
+        const viewportHeight = window.innerHeight;
+        const mouseY = event.clientY;
+        const newHeight = Math.max(300, Math.min(600, viewportHeight - mouseY + 300));
+
+        keyboardContainer.style.setProperty('--keyboard-height', `${newHeight}px`);
+        keyboard.style.setProperty('--key-size', `${Math.max(14, newHeight / 2)}px`);
+        conversation.style.flex = `${100 - newHeight}`;
+      }
+    }
+
+    // Stops resizing on mouseup
+    function stopResizing() {
+      isDragging = false;
+      document.removeEventListener('mousemove', resizeKeyboard);
+      document.removeEventListener('mouseup', stopResizing);
     }
 
   </script>
