@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iPhone Messaging UI</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e5e5ea;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .header {
+      background-color: #f9f9f9;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .header h1 {
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .conversation {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      overflow-y: auto;
+      background-color: #d8d8d8;
+    }
+
+    .message {
+      max-width: 70%;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    .message.sent {
+      margin-left: auto;
+      background-color: #007aff;
+      color: white;
+    }
+
+    .message.received {
+      margin-right: auto;
+      background-color: #e5e5ea;
+      color: black;
+    }
+
+    .keyboard-container {
+      background-color: #f9f9f9;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid #ccc;
+    }
+
+    #message {
+      width: 100%;
+      height: 30px;
+      padding: 5px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      margin-bottom: 10px;
+      outline: none;
+    }
+
+    .keyboard {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 5px;
+    }
+
+    .key {
+      padding: 15px;
+      font-size: 16px;
+      text-align: center;
+      background-color: #e0e0e0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .key:active {
+      background-color: #ccc;
+    }
+
+    .wide {
+      grid-column: span 5;
+    }
+
+    .shift {
+      grid-column: span 2;
+    }
+
+    .backspace {
+      grid-column: span 2;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Sarah B.</h1>
+    <div>
+      📞 🎥
+    </div>
+  </div>
+  <div class="conversation">
+    <div class="message received">Did you finish the report?</div>
+    <div class="message sent">No, not yet.</div>
+    <div class="message sent">Can you work on it?</div>
+    <div class="message received">Yeah, what parts?</div>
+  </div>
+  <div class="keyboard-container">
+    <textarea id="message" placeholder="Type a message..." readonly></textarea>
+    <div class="keyboard">
+      <!-- Row 1 -->
+      <button class="key" onclick="typeKey('q')">q</button>
+      <button class="key" onclick="typeKey('w')">w</button>
+      <button class="key" onclick="typeKey('e')">e</button>
+      <button class="key" onclick="typeKey('r')">r</button>
+      <button class="key" onclick="typeKey('t')">t</button>
+      <button class="key" onclick="typeKey('y')">y</button>
+      <button class="key" onclick="typeKey('u')">u</button>
+      <button class="key" onclick="typeKey('i')">i</button>
+      <button class="key" onclick="typeKey('o')">o</button>
+      <button class="key" onclick="typeKey('p')">p</button>
+      <!-- Row 2 -->
+      <button class="key" onclick="typeKey('a')">a</button>
+      <button class="key" onclick="typeKey('s')">s</button>
+      <button class="key" onclick="typeKey('d')">d</button>
+      <button class="key" onclick="typeKey('f')">f</button>
+      <button class="key" onclick="typeKey('g')">g</button>
+      <button class="key" onclick="typeKey('h')">h</button>
+      <button class="key" onclick="typeKey('j')">j</button>
+      <button class="key" onclick="typeKey('k')">k</button>
+      <button class="key" onclick="typeKey('l')">l</button>
+      <!-- Row 3 -->
+      <button class="key shift" onclick="toggleShift()">Shift</button>
+      <button class="key" onclick="typeKey('z')">z</button>
+      <button class="key" onclick="typeKey('x')">x</button>
+      <button class="key" onclick="typeKey('c')">c</button>
+      <button class="key" onclick="typeKey('v')">v</button>
+      <button class="key" onclick="typeKey('b')">b</button>
+      <button class="key" onclick="typeKey('n')">n</button>
+      <button class="key" onclick="typeKey('m')">m</button>
+      <button class="key backspace" onclick="backspace()">⌫</button>
+      <!-- Row 4 -->
+      <button class="key wide" onclick="typeKey(' ')">Space</button>
+    </div>
+  </div>
+
+  <script>
+    const messageBox = document.getElementById('message');
+    let isShift = false;
+
+    // Function to type a key
+    function typeKey(key) {
+      if (isShift) {
+        key = key.toUpperCase();
+        toggleShift(); // Turn off shift after one use
+      }
+      messageBox.value += key;
+    }
+
+    // Function to toggle shift
+    function toggleShift() {
+      isShift = !isShift;
+      const keys = document.querySelectorAll('.key');
+      keys.forEach(key => {
+        if (key.textContent.length === 1) {
+          key.textContent = isShift
+            ? key.textContent.toUpperCase()
+            : key.textContent.toLowerCase();
+        }
+      });
+    }
+
+    // Function to delete the last character
+    function backspace() {
+      messageBox.value = messageBox.value.slice(0, -1);
+    }
+  </script>
+</body>
+</html>
