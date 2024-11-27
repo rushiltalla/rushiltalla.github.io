@@ -69,14 +69,14 @@
       justify-content: center;
       flex-shrink: 0;
       padding: 10px;
-      height: var(--keyboard-height, 300px);
+      height: var(--keyboard-height, 250px);
       transition: height 0.3s ease;
     }
 
     .keyboard {
       display: grid;
       grid-template-columns: repeat(20, 1fr); /* 20 evenly spaced columns */
-      grid-template-rows: repeat(4, 60px); /* 4 fixed-height rows */
+      grid-template-rows: repeat(4, 45px); /* 4 fixed-height rows */
       gap: 5px; /* Space between keys */
       width: var(--keyboard-width, 100%); /* Dynamic keyboard width */
       max-width: 500px; /* Limit max size on larger screens */
@@ -348,8 +348,12 @@
 
     // Resets the keyboard height, key size, and alignment
     function resetKeyboard() {
-      keyboardContainer.style.setProperty('--keyboard-height', '300px');
+      keyboardContainer.style.setProperty('--keyboard-height', '250px');
       keyboard.style.setProperty('--key-size', '20px');
+      keyboard.style.setProperty(
+          'grid-template-rows',
+          `repeat(4, 45px)`
+        );
       conversation.style.flex = '1';
       adjustKeyboardAlignment(50);
       document.getElementById('alignment-slider').value = 50;
@@ -369,7 +373,7 @@
       if (isDragging) {
         const viewportHeight = window.innerHeight;
         const mouseY = event.type === 'mousemove' ? event.clientY : event.touches[0].clientY;
-        const newHeight = Math.max(300, Math.min(600, viewportHeight - mouseY + 300));
+        const newHeight = Math.max(250, Math.min(600, viewportHeight - mouseY + 250));
 
         keyboardContainer.style.setProperty('--keyboard-height', `${newHeight}px`);
         keyboard.style.setProperty('--key-size', `${Math.max(14, newHeight / 2)}px`);
