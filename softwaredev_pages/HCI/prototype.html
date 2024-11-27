@@ -188,6 +188,11 @@
       border-radius: 18px;
       font-size: large;
       padding: 10px 0;
+      opacity: 0;
+    }
+
+    .send-button[style*="inline-block"] {
+      opacity: 1;
     }
 
     /* -=-=--=-=- DRAG -=-=-=-= */
@@ -215,32 +220,20 @@
       appearance: none;
       width: 80%;
       height: 10px; /* Height of the track */
-      background: gray; /* Background color of the track */
+      background: rgb(182, 155, 155); /* Background color of the track */
       border-radius: 5px; /* Rounded edges for the track */
     }
 
     .slider::-webkit-slider-thumb {
-      -webkit-appearance: none; /* Remove default thumb styling */
+      -webkit-appearance: none;
       appearance: none;
-      width: 30px; /* Thumb width */
-      height: 30px; /* Thumb height */
-      background: url('banana_bread.png') no-repeat center; /* Custom image for the thumb */
-      background-size: cover; /* Ensure the image fills the thumb */
-      cursor: pointer; /* Pointer cursor on hover */
-      border-radius: 50%; /* Optional: make the thumb round */
-      border: 2px solid #007aff; /* Optional: border around the thumb */
+      width: 55px; 
+      height: 55px;
+      background: url('directions_icon.png') no-repeat center; 
+      background-size: cover; 
+      cursor: pointer;
+      border-radius: 50%;
     }
-
-    .slider::-moz-range-thumb {
-      width: 30px; /* Thumb width */
-      height: 30px; /* Thumb height */
-      background: url('banana_bread.png') no-repeat center; /* Custom image for the thumb */
-      background-size: cover; /* Ensure the image fills the thumb */
-      cursor: pointer; /* Pointer cursor on hover */
-      border-radius: 50%; /* Optional: make the thumb round */
-      border: 2px solid #007aff; /* Optional: border around the thumb */
-    }
-            
 
   </style>
 </head>
@@ -357,6 +350,28 @@
       messageBox.value = "";
     }
 
+
+    // -=-=--= Send Buttons -=-=-=-
+    function adjustSendButtons(value) {
+      console.log(`Slider value: ${value}`);
+      const leftButton = document.querySelector('.send-button:first-of-type');
+      const rightButton = document.querySelector('.send-button:last-of-type');
+
+      if (value < 48) {
+        leftButton.style.display = 'inline-block'; // Show the left button
+        rightButton.style.display = 'none';       // Hide the right button
+      } else {
+        leftButton.style.display = 'none';        // Hide the left button
+        rightButton.style.display = 'inline-block'; // Show the right button
+      }
+    }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const slider = document.getElementById('alignment-slider');
+      adjustSendButtons(slider.value);
+    });
+
     function adjustKeyboardAlignment(value) {
       const align = Math.max(10, Math.min(90, value)); // Constrain between 10 and 90
 
@@ -380,6 +395,8 @@
         keyboard.style.setProperty("margin-right", "auto");
         keyboard.style.setProperty("margin-left", "auto");
       }
+
+      adjustSendButtons(align)
     }
 
 
@@ -484,6 +501,9 @@
 
       key.style.transform = `scale(${scale})`;
     });
+
+    
+
   }
 
   </script>
