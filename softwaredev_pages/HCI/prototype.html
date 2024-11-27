@@ -289,12 +289,12 @@
       keyboard.style.setProperty("--keyboard-width", `${100 - Math.abs(align - 50)}%`);
 
       // Adjust alignment based on slider position
-      if (align < 50) {
+      if (align < 48) {
         // Left alignment
         keyboard.style.setProperty("--keyboard-margin", "0");
         keyboard.style.setProperty("margin-right", "auto");
         keyboard.style.setProperty("margin-left", "0");
-      } else if (align > 50) {
+      } else if (align > 52) {
         // Right alignment
         keyboard.style.setProperty("--keyboard-margin", "0");
         keyboard.style.setProperty("margin-right", "0");
@@ -302,6 +302,8 @@
       } else {
         // Center alignment
         keyboard.style.setProperty("--keyboard-margin", "auto");
+        keyboard.style.setProperty("margin-right", "auto");
+        keyboard.style.setProperty("margin-left", "auto");
       }
     }
 
