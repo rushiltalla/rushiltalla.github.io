@@ -109,6 +109,7 @@
       text-transform: lowercase;
       grid-column: span 2; /* Each key spans 2 columns */
       padding: 5px; /* Default padding */
+      transition: transform 0.1s ease;
     }
 
     .key-blank {
@@ -437,6 +438,53 @@
       document.removeEventListener('touchmove', resizeKeyboard);
       document.removeEventListener('touchend', stopResizing);
     }
+
+    // -=-=-=-=-==-=- Dynamic Resizing =-=-=-=-=-==-=-=-=-
+    const keys = document.querySelectorAll('.key'); // Select all keys
+
+    // Track mouse or touch position
+    let cursorX = 0;
+    let cursorY = 0;
+
+    // Update cursor position for mouse
+    document.addEventListener('mousemove', (event) => {
+      cursorX = event.clientX;
+      cursorY = event.clientY;
+      resizeKeys();
+    });
+
+    // Update cursor position for touch
+    document.addEventListener('touchmove', (event) => {
+      cursorX = event.touches[0].clientX;
+      cursorY = event.touches[0].clientY;
+      resizeKeys();
+    });
+
+    // Resize keys based on cursor position
+    function resizeKeys() {
+    keys.forEach((key) => {
+      // Get the key's position
+      const rect = key.getBoundingClientRect();
+      const keyCenterX = rect.left + rect.width / 2;
+      const keyCenterY = rect.top + rect.height / 2;
+
+      // Calculate distance from the cursor to the key
+      const distance = Math.sqrt(
+        Math.pow(cursorX - keyCenterX, 2) + Math.pow(cursorY - keyCenterY, 2)
+      );
+
+      // Scale the key based on distance
+      const maxScale = 1.3; // Maximum scale (1.3x normal size)
+      const minScale = 1.0; // Minimum scale (normal size)
+      const maxDistance = 100; // Maximum distance for scaling
+      const scale = Math.max(
+        minScale, 
+        maxScale - (distance / maxDistance) * (maxScale - minScale)
+      );
+
+      key.style.transform = `scale(${scale})`;
+    });
+  }
 
   </script>
 </body>
