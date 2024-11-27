@@ -88,7 +88,7 @@
       grid-template-rows: repeat(4, 60px); /* 4 rows with fixed height */
       gap: 5px;
       width: 100%;
-      max-width: 600px;
+      max-width: 500px;
       margin: auto;
     }
 
@@ -148,7 +148,7 @@
   <div class="header">
     <h1>Sarah B.</h1>
     <div>
-      📞 🎥
+      🎥 📞 
     </div>
   </div>
   <div class="conversation">
@@ -196,7 +196,7 @@
       <button class="key backspace" onclick="backspace()">⌫</button>
 
       <!-- Fourth Row -->
-      <button class="key key-sides">123</button>
+      <button class="key key-sides" onclick="toggleNumbers()">123</button>
       <button class="key key-space" onclick="typeKey(' ')">space</button>
       <button class="key key-sides" onclick="typeKey('\n')">return</button>
     </div>
@@ -231,7 +231,7 @@
     }
 
     function toggleNumbers() {
-      alert("Number keyboard not implemented yet!");
+      messageBox.value = "";
     }
   </script>
 </body>
