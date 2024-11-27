@@ -151,18 +151,6 @@
       padding: 10px 0;
     }
 
-    .footer {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 0;
-    }
-
-    .slider {
-      width: 80%;
-    }
-
     /* Adjust for smaller screens */
     @media (max-width: 500px) {
       .keyboard {
@@ -191,9 +179,13 @@
 
 
     .send-button {
-      width: 8%;
+      width: 45px;
       text-align: center;
-      background-color: #5757e8;
+      background-color: #007aff;
+      color: white;
+      border: none;
+      border-radius: 18px;
+      font-size: large;
       padding: 10px 0;
     }
 
@@ -218,8 +210,36 @@
     }
 
     .slider {
+      -webkit-appearance: none;
+      appearance: none;
       width: 80%;
+      height: 10px; /* Height of the track */
+      background: gray; /* Background color of the track */
+      border-radius: 5px; /* Rounded edges for the track */
     }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none; /* Remove default thumb styling */
+      appearance: none;
+      width: 30px; /* Thumb width */
+      height: 30px; /* Thumb height */
+      background: url('banana_bread.png') no-repeat center; /* Custom image for the thumb */
+      background-size: cover; /* Ensure the image fills the thumb */
+      cursor: pointer; /* Pointer cursor on hover */
+      border-radius: 50%; /* Optional: make the thumb round */
+      border: 2px solid #007aff; /* Optional: border around the thumb */
+    }
+
+    .slider::-moz-range-thumb {
+      width: 30px; /* Thumb width */
+      height: 30px; /* Thumb height */
+      background: url('banana_bread.png') no-repeat center; /* Custom image for the thumb */
+      background-size: cover; /* Ensure the image fills the thumb */
+      cursor: pointer; /* Pointer cursor on hover */
+      border-radius: 50%; /* Optional: make the thumb round */
+      border: 2px solid #007aff; /* Optional: border around the thumb */
+    }
+            
 
   </style>
 </head>
@@ -280,17 +300,10 @@
       <button class="key key-sides" onclick="typeKey('\n')">return</button>
     </div>
   </div>
-  <button class="drag-button" 
-    id="drag-button" 
-    ondblclick="resetKeyboard()" 
-    onmousedown="startResizing(event)" 
-    ontouchstart="startResizing(event)">
-    ±
-  </button>
   <div class="slider-container">
     <button class="send-button" 
       onclick="toggleNumbers()">
-      |
+      ↑
     </button>
     <input 
       id="alignment-slider" 
@@ -299,15 +312,16 @@
       min="10" 
       max="90" 
       value="50" 
-      oninput="adjustKeyboardAlignment(this.value)">
-      <button class="send-button" 
+      oninput="adjustKeyboardAlignment(this.value)"
+      ondblclick="resetKeyboard()"
+      onmousedown="startResizing(event)"
+      ontouchstart="startResizing(event)">
+    <button class="send-button"
       onclick="toggleNumbers()">
-      |
+      ↑
     </button>
   </div>
-  <div class="footer">
-    593 Prototype
-  </div>
+
 
   <script>
     const messageBox = document.getElementById('message');
