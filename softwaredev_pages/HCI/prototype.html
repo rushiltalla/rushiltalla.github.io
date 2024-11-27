@@ -189,6 +189,7 @@
       background-color: #d1d1d6;
       padding: 10px 0;
       user-select: none;
+      outline: none; 
     }
 
     .slider-container {
@@ -262,9 +263,13 @@
       <button class="key key-sides" onclick="typeKey('\n')">return</button>
     </div>
   </div>
-  <div class="drag-button" id="drag-button" ondblclick="resetKeyboard()" onmousedown="startResizing(event)">
+  <button class="drag-button" 
+    id="drag-button" 
+    ondblclick="resetKeyboard()" 
+    onmousedown="startResizing(event)" 
+    ontouchstart="startResizing(event)">
     <  +/-  >
-  </div>
+  </button>
   <div class="slider-container">
     <input 
       id="alignment-slider" 
