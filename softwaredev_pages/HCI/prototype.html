@@ -12,6 +12,7 @@
       display: flex;
       flex-direction: column;
       height: 100vh;
+      overflow-y: hidden;
       background-color: #d1d1d6; /* Darker background */
     }
 
@@ -150,6 +151,14 @@
       padding: 10px 0;
     }
 
+    .footer {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 0;
+    }
+
     .slider {
       width: 80%;
     }
@@ -268,7 +277,7 @@
     ondblclick="resetKeyboard()" 
     onmousedown="startResizing(event)" 
     ontouchstart="startResizing(event)">
-    <  +/-  >
+    ±
   </button>
   <div class="slider-container">
     <input 
@@ -279,6 +288,9 @@
       max="90" 
       value="50" 
       oninput="adjustKeyboardAlignment(this.value)">
+  </div>
+  <div class="footer">
+    593 Prototype
   </div>
 
   <script>
