@@ -71,6 +71,17 @@
       padding: 10px;
     }
 
+    .keyboard {
+      display: grid;
+      grid-template-columns: repeat(20, 1fr); /* 20 evenly spaced columns */
+      grid-template-rows: repeat(4, 60px); /* 4 fixed-height rows */
+      gap: 5px; /* Space between keys */
+      width: var(--keyboard-width, 100%); /* Dynamic keyboard width */
+      max-width: 500px; /* Limit max size on larger screens */
+      margin-left: var(--keyboard-margin, auto); /* Adjust left margin dynamically */
+      margin-right: var(--keyboard-margin, auto); /* Adjust right margin dynamically */
+    }
+
     #message {
       width: 90%;
       height: 35px;
@@ -80,16 +91,6 @@
       border-radius: 15px;
       margin-bottom: 10px;
       outline: none;
-    }
-
-    .keyboard {
-      display: grid;
-      grid-template-columns: repeat(20, 1fr); /* 20 evenly spaced columns */
-      grid-template-rows: repeat(4, 60px); /* 4 fixed-height rows */
-      gap: 5px; /* Space between keys */
-      width: 100%;
-      max-width: 500px; /* Limit max size on larger screens */
-      margin: auto;
     }
 
     .key {
@@ -138,6 +139,19 @@
       grid-column: span 8; /* Space bar spans 8 columns */
     }
 
+    /* Slider container */
+    .slider-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
+    }
+
+    .slider {
+      width: 80%;
+    }
+
     /* Adjust for smaller screens */
     @media (max-width: 500px) {
       .keyboard {
@@ -181,7 +195,7 @@
   </div>
   <div class="keyboard-container">
     <textarea id="message" placeholder="Message..." readonly></textarea>
-    <div class="keyboard">
+    <div class="keyboard" id="keyboard">
       <!-- Top Row -->
       <button class="key" onclick="typeKey('q')">q</button>
       <button class="key" onclick="typeKey('w')">w</button>
@@ -224,8 +238,20 @@
     </div>
   </div>
 
+  <div class="slider-container">
+    <input 
+      id="alignment-slider" 
+      class="slider" 
+      type="range" 
+      min="10" 
+      max="90" 
+      value="50" 
+      oninput="adjustKeyboardAlignment(this.value)">
+  </div>
+
   <script>
     const messageBox = document.getElementById('message');
+    const keyboard = document.getElementById('keyboard');
     let isShift = false;
 
     function typeKey(key) {
@@ -255,6 +281,30 @@
     function toggleNumbers() {
       messageBox.value = "";
     }
+
+    function adjustKeyboardAlignment(value) {
+      const align = Math.max(10, Math.min(90, value)); // Constrain between 10 and 90
+
+      // Set keyboard width
+      keyboard.style.setProperty("--keyboard-width", `${100 - Math.abs(align - 50)}%`);
+
+      // Adjust alignment based on slider position
+      if (align < 50) {
+        // Left alignment
+        keyboard.style.setProperty("--keyboard-margin", "0");
+        keyboard.style.setProperty("margin-right", "auto");
+        keyboard.style.setProperty("margin-left", "0");
+      } else if (align > 50) {
+        // Right alignment
+        keyboard.style.setProperty("--keyboard-margin", "0");
+        keyboard.style.setProperty("margin-right", "0");
+        keyboard.style.setProperty("margin-left", "auto");
+      } else {
+        // Center alignment
+        keyboard.style.setProperty("--keyboard-margin", "auto");
+      }
+    }
+
   </script>
 </body>
 </html>
