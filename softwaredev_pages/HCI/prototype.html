@@ -56,7 +56,7 @@
 
     .message.received {
       margin-right: auto;
-      background-color: #e5e5ea;
+      background-color: #c9c9d5;
       color: black;
     }
 
@@ -71,9 +71,20 @@
       padding: 10px;
     }
 
+    #message {
+      width: 90%;
+      height: 35px;
+      padding: 5px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      margin-bottom: 10px;
+      outline: none;
+    }
+
     .keyboard {
       display: grid;
-      grid-template-columns: repeat(10, 1fr); /* Fit 10 columns per row */
+      grid-template-columns: repeat(20, 1fr); /* Fit 10 columns per row */
       grid-template-rows: repeat(4, 60px); /* 4 rows with fixed height */
       gap: 5px;
       width: 100%;
@@ -85,33 +96,44 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px; /* Fixed font size */
-      background-color: #f5f5f7; /* Lighter key color */
+      font-size: 20px; /* Fixed font size */
+      background-color: #ffffff; /* Lighter key color */
       border: none;
       border-radius: 8px;
       cursor: pointer;
       user-select: none;
       text-transform: lowercase;
+      grid-column: span 2;
+    }
+
+    .key-blank {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background-color: #d1d1d6;
+      border: none;
+      border-radius: 8px;
+      grid-column: span 1;
     }
 
     .key:active {
       background-color: #ccc;
     }
 
-    .wide {
-      grid-column: span 5; /* For Space key */
+    .shift, .backspace {
+      grid-column: span 3;
+      background-color: #a1a1a8;
+      font-size: 25px;
     }
 
-    .shift, .backspace, .bottom-key {
-      grid-column: span 2;
+    .key-sides {
+      grid-column: span 6;
+      background-color: #a1a1a8;
     }
 
-    .keyboard-row-bottom {
-      display: grid;
-      grid-template-columns: 2fr 5fr 3fr; /* 123, space, return proportions */
-      gap: 5px;
-      width: 100%;
-      margin-top: 5px;
+    .key-space {
+      grid-column: span 8;
     }
 
     /* Responsive adjustments */
@@ -151,6 +173,7 @@
       <button class="key" onclick="typeKey('p')">p</button>
 
       <!-- Second Row -->
+      <button class="key-blank"></button>
       <button class="key" onclick="typeKey('a')">a</button>
       <button class="key" onclick="typeKey('s')">s</button>
       <button class="key" onclick="typeKey('d')">d</button>
@@ -171,13 +194,11 @@
       <button class="key" onclick="typeKey('n')">n</button>
       <button class="key" onclick="typeKey('m')">m</button>
       <button class="key backspace" onclick="backspace()">⌫</button>
-    </div>
 
-    <!-- Bottom Row -->
-    <div class="keyboard-row-bottom">
-      <button class="key bottom-key" onclick="toggleNumbers()">123</button>
-      <button class="key wide" onclick="typeKey(' ')">space</button>
-      <button class="key bottom-key" onclick="typeKey('↩')">return</button>
+      <!-- Fourth Row -->
+      <button class="key key-sides">123</button>
+      <button class="key key-space" onclick="typeKey(' ')">space</button>
+      <button class="key key-sides" onclick="typeKey('\n')">return</button>
     </div>
   </div>
 
