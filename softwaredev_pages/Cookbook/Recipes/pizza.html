@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza</title>
+    <style>
+        body {
+            /* font-family: "Lucida Console", monospace; */
+            font-family: Garamond, serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Light grey background for wider screens */
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 800px; /* Fixed width for the entire content area */
+            background-color: #ffffff; /* White background for the content */
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+            max-width: 100%; /* Allow container to scale down on smaller screens */
+            box-sizing: border-box;
+        }
+
+        .recipe-header {
+            width: 100%;
+            height: 300px; /* Fixed height for the image container */
+            overflow: hidden; /* Crop overflow */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .recipe-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Scale image to fill the container while cropping overflow */
+            object-position: center; /* Center the image */
+            border-radius: 8px;
+
+        }
+
+        .title {
+            font-family: Papyrus, fantasy;
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+            margin: 0;
+            padding: 10px;
+            border-bottom: 2px solid #333;  /* Underline with border */
+            display: inline-block;  /* Allows for shorter underline */
+        }
+
+        .recipe-container {
+            display: flex;
+        }
+
+        .ingredients, .instructions {
+            width: 50%; /* Each column takes up 50% of the container width */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .ingredients {
+            background-color: #f5e9d4; /* Light beige color for ingredients */
+        }
+
+        .instructions {
+            background-color: #ffffff; /* White color for instructions */
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        h2, h3 {
+            margin-top: 10;
+        }
+
+        .servings-time {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        ol, ul {
+            padding-left: 20px;
+        }
+
+        .strikethrough {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 600px) {
+            .recipe-container {
+                flex-direction: column; /* Stack columns vertically */
+            }
+
+            .ingredients, .instructions {
+                width: 100%; /* Make each column full-width */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="recipe-header">
+            <img src="../images/pizza.png" alt="Pizza">
+        </div>
+
+        <div class="recipe-container">
+            <div class="ingredients">
+                <h1 class="title">Pizza</h1>
+                <div class="servings-time">
+                    <span>Servings: 2 pizzas</span>
+                    <span>Time: 30 minutes</span>
+                </div>
+                <h2>Equipment</h2>
+                <ul>
+                    
+                        <li class="clickable">2 Pizza Pans</li>
+                    
+                        <li class="clickable">Large Bowl</li>
+                    
+                </ul>
+                <h2>Ingredients</h2>
+                <ul>
+                    
+                        <li class="clickable">1 and 1/3 cups warm water (between 100-110°F)</li>
+                    
+                        <li class="clickable">2 and 1/4 tsp instant yeast (1 packet)</li>
+                    
+                        <li class="clickable">1.5 tbsp granulated sugar</li>
+                    
+                        <li class="clickable">2 tbsp olive oil</li>
+                    
+                        <li class="clickable">1.5 tsp salt</li>
+                    
+                        <li class="clickable">3.5 cups bread flour (or wheat flour)</li>
+                    
+                        <li class="clickable">sprinkle of cornmeal for dusting pan</li>
+                    
+                        <li class="clickable">Onions, garlic, parmesan, mozerella, chicken, tomatoes as toppings</li>
+                    
+                </ul>
+            </div>
+            <div class="instructions">
+                <h2>Directions</h2>
+                <ol>
+                    
+                        <li class="clickable">Combine the warm water, yeast, and sugar in a small bowl. Allow to rest for 5 minutes.</li>
+                    
+                        <li class="clickable">Mix flour, salt, and olive oil to a large bowl and mix.</li>
+                    
+                        <li class="clickable">Add the yeast mixture to the large bowl and mix until combined. Then, knead the dough, adding extra flour if the dough becomes too sticky. Check if you can stretch a ball of the dough into a thin film you can see light through without it tearing to know when it is ready.</li>
+                    
+                        <li class="clickable">Grease the large bowl with an oil coating, then return the dough and cover with foil. Allow dough to rise for 90 minutes (in oven with light on, can heat oven slightly as well).</li>
+                    
+                        <li class="clickable">Preheat oven to 475°F</li>
+                    
+                        <li class="clickable">Punch the dough down to release air bubbles. Cut it into two pieces, and stretch them out into disks slightly. Then return them to the bowl and cover again so they can rest while you prepare the toppings.</li>
+                    
+                        <li class="clickable">With the toppings ready, take out the dough and flatten onto the pizza pans, stretching without breaking the dough. Poke center region with a fork to prevent bubbles from forming in the pizza. Add sauce and toppings.</li>
+                    
+                        <li class="clickable">Bake in oven for around 13 minutes.</li>
+                    
+                        <li class="clickable">Immediately after removing, optionally apply a parmesan garlic oil mixture around the crust.</li>
+                    
+                </ol>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Add event listeners to items that should be clickable
+        document.querySelectorAll('.clickable').forEach(item => {
+            item.addEventListener('click', () => {
+                // Toggle the strikethrough effect
+                item.classList.toggle('strikethrough');
+            });
+        });
+    </script>
+
+</body>
+</html>
