@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chicken Gyros</title>
+    <style>
+        body {
+            /* font-family: "Lucida Console", monospace; */
+            font-family: Garamond, serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Light grey background for wider screens */
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 800px; /* Fixed width for the entire content area */
+            background-color: #ffffff; /* White background for the content */
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+            max-width: 100%; /* Allow container to scale down on smaller screens */
+            box-sizing: border-box;
+        }
+
+        .recipe-header {
+            width: 100%;
+            height: 300px; /* Fixed height for the image container */
+            overflow: hidden; /* Crop overflow */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .recipe-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Scale image to fill the container while cropping overflow */
+            object-position: center; /* Center the image */
+            border-radius: 8px;
+
+        }
+
+        .title {
+            font-family: Papyrus, fantasy;
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+            margin: 0;
+            padding: 10px;
+            border-bottom: 2px solid #333;  /* Underline with border */
+            display: inline-block;  /* Allows for shorter underline */
+        }
+
+        .recipe-container {
+            display: flex;
+        }
+
+        .ingredients, .instructions {
+            width: 50%; /* Each column takes up 50% of the container width */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .ingredients {
+            background-color: #f5e9d4; /* Light beige color for ingredients */
+        }
+
+        .instructions {
+            background-color: #ffffff; /* White color for instructions */
+        }
+
+        .subsection {
+            margin-top: 4px;
+            margin-bottom: 4px;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        h2, h3 {
+            margin-top: 10;
+        }
+
+        .servings-time {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        ol, ul {
+            padding-left: 20px;
+        }
+
+        .strikethrough {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 600px) {
+            .recipe-container {
+                flex-direction: column; /* Stack columns vertically */
+            }
+
+            .ingredients, .instructions {
+                width: 100%; /* Make each column full-width */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="recipe-header">
+            <img src="../images/chicken_gyros.jpg" alt="Chicken Gyros">
+        </div>
+
+        <div class="recipe-container">
+            <div class="ingredients">
+                <h1 class="title">Chicken Gyros</h1>
+                <div class="servings-time">
+                    <span>Servings: 4 servings</span>
+                    <span>Time: 45 minutes</span>
+                </div>
+                <h2>Equipment</h2>
+                <ul>
+                    
+                        <li class="clickable">Pan</li>
+                    
+                </ul>
+                <h2>Ingredients</h2>
+                <ul>
+                    
+                        <li class="clickable">- Chicken</li>
+                    
+                        <li class="clickable">1 lb chicken breast, thinly sliced</li>
+                    
+                        <li class="clickable">1 tsp salt</li>
+                    
+                        <li class="clickable">1/2 tsp pepper</li>
+                    
+                        <li class="clickable">3 garlic cloves, diced</li>
+                    
+                        <li class="clickable">1 tbsp oregano</li>
+                    
+                        <li class="clickable">1/2 lime, juiced</li>
+                    
+                        <li class="clickable">1/2 tsp cumin</li>
+                    
+                        <li class="clickable">1/2 cup greek yogurt</li>
+                    
+                        <li class="clickable">1.5 tbsp olive oil</li>
+                    
+                        <li class="clickable">- Gyro</li>
+                    
+                        <li class="clickable">Pita Bread</li>
+                    
+                        <li class="clickable">Chicken/Tofu</li>
+                    
+                        <li class="clickable">Breakfast Potatoes</li>
+                    
+                        <li class="clickable">Tzatziki</li>
+                    
+                        <li class="clickable">Coleslaw Mix</li>
+                    
+                        <li class="clickable">Lime Juice</li>
+                    
+                </ul>
+            </div>
+            <div class="instructions">
+                <h2>Directions</h2>
+                <ol>
+                    
+                        <li class="clickable">Mix the chicken marinade togehter. Add the chicken and let rest for 30 minutes.</li>
+                    
+                        <li class="clickable">Cook the chicken on medium/low heat (to prevent drying, flip only once! Flip when the white "cooked" section reaches half way up.).</li>
+                    
+                        <li class="clickable">After letting the chicken rest for 7 minutes, cut into strips.</li>
+                    
+                        <li class="clickable">Assemble the Gyro with all of the components.</li>
+                    
+                </ol>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Add event listeners to items that should be clickable
+        document.querySelectorAll('.clickable').forEach(item => {
+            item.addEventListener('click', () => {
+                // Toggle the strikethrough effect
+                item.classList.toggle('strikethrough');
+            });
+        });
+    </script>
+
+</body>
+</html>

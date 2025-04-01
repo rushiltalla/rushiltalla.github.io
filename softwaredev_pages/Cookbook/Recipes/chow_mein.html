@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chow Mein</title>
+    <style>
+        body {
+            /* font-family: "Lucida Console", monospace; */
+            font-family: Garamond, serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Light grey background for wider screens */
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 800px; /* Fixed width for the entire content area */
+            background-color: #ffffff; /* White background for the content */
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+            max-width: 100%; /* Allow container to scale down on smaller screens */
+            box-sizing: border-box;
+        }
+
+        .recipe-header {
+            width: 100%;
+            height: 300px; /* Fixed height for the image container */
+            overflow: hidden; /* Crop overflow */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .recipe-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Scale image to fill the container while cropping overflow */
+            object-position: center; /* Center the image */
+            border-radius: 8px;
+
+        }
+
+        .title {
+            font-family: Papyrus, fantasy;
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+            margin: 0;
+            padding: 10px;
+            border-bottom: 2px solid #333;  /* Underline with border */
+            display: inline-block;  /* Allows for shorter underline */
+        }
+
+        .recipe-container {
+            display: flex;
+        }
+
+        .ingredients, .instructions {
+            width: 50%; /* Each column takes up 50% of the container width */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .ingredients {
+            background-color: #f5e9d4; /* Light beige color for ingredients */
+        }
+
+        .instructions {
+            background-color: #ffffff; /* White color for instructions */
+        }
+
+        .subsection {
+            margin-top: 4px;
+            margin-bottom: 4px;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        h2, h3 {
+            margin-top: 10;
+        }
+
+        .servings-time {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        ol, ul {
+            padding-left: 20px;
+        }
+
+        .strikethrough {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 600px) {
+            .recipe-container {
+                flex-direction: column; /* Stack columns vertically */
+            }
+
+            .ingredients, .instructions {
+                width: 100%; /* Make each column full-width */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="recipe-header">
+            <img src="../images/chow_mein.jpg" alt="Chow Mein">
+        </div>
+
+        <div class="recipe-container">
+            <div class="ingredients">
+                <h1 class="title">Chow Mein</h1>
+                <div class="servings-time">
+                    <span>Servings: 3 servings</span>
+                    <span>Time: 20 minutes</span>
+                </div>
+                <h2>Equipment</h2>
+                <ul>
+                    
+                        <li class="clickable">Wok (preferably)</li>
+                    
+                        <li class="clickable">Gas Stove (preferably)</li>
+                    
+                        <li class="clickable">Pasta Strainer</li>
+                    
+                </ul>
+                <h2>Ingredients</h2>
+                <ul>
+                    
+                        <li class="clickable">10 oz noodles (Hakubaku Udon)</li>
+                    
+                        <li class="clickable">2 tbsp olive oil</li>
+                    
+                        <li class="clickable">2 cups shredded cabbage and carrots</li>
+                    
+                        <li class="clickable">1/4 cup onions</li>
+                    
+                        <li class="clickable">0.75 tbsp ginger garlic paste</li>
+                    
+                        <li class="clickable">2 cloves garlic, diced</li>
+                    
+                        <li class="clickable">- Sauce</li>
+                    
+                        <li class="clickable">3 tbsp hoisin sauce</li>
+                    
+                        <li class="clickable">3.5 tbsp soy sauce</li>
+                    
+                        <li class="clickable">1.5 tbsp olive oil</li>
+                    
+                        <li class="clickable">1 tbsp white wine vinegar</li>
+                    
+                        <li class="clickable">1 tsp wheat flour</li>
+                    
+                        <li class="clickable">0.5 tbsp sugar</li>
+                    
+                </ul>
+            </div>
+            <div class="instructions">
+                <h2>Directions</h2>
+                <ol>
+                    
+                        <li class="clickable">Add 1 tbsp oil to a large pan/wok on medium/high heat. Once hot, add ginger and garlic. Let cook for a minute, then add the onion. Add the rest of the vegetables, and stir frequently. Stir fry for 2-3 minutes and store for later.</li>
+                    
+                        <li class="clickable">In a bowl, mix together the sauce.</li>
+                    
+                        <li class="clickable">Cook the noodles as instructed. Do not over cook, as it will be cooked again with the sauce. Once the noodles are done, rince with cold water to wash off the starch.</li>
+                    
+                        <li class="clickable">Add the second tbsp of oil to the pan/wok on medium/high heat. Add the noodles and stir fry for 2 minutes. Add the sauce and stir fry for another 2 minutes. Finally, add the vegetables and cook for another 2 minutes.</li>
+                    
+                </ol>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Add event listeners to items that should be clickable
+        document.querySelectorAll('.clickable').forEach(item => {
+            item.addEventListener('click', () => {
+                // Toggle the strikethrough effect
+                item.classList.toggle('strikethrough');
+            });
+        });
+    </script>
+
+</body>
+</html>
