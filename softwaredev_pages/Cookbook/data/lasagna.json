@@ -1,0 +1,35 @@
+{
+    "time": "90",
+    "servings": "8 servings",
+    "tags": [
+      "Main",
+      "Savory",
+      "Vegetarian"
+    ],
+    "equipment": [
+      "9x9 Baking Tray"
+    ],
+    "ingredients": [
+      "1 bell pepper",
+      "1 medium onion",
+      "3 cloves garlic",
+      "1 tbsp olive oil",
+      "10oz ricotta cheese",
+      "8 oz baby bella mushrooms",
+      "0.5 tsp salt",
+      "0.5 tsp pepper",
+      "0.5 tsp cumin",
+      "Marinara Sauce",
+      "3 layers worth of lasagna noodles"
+    ],
+    "steps": [
+      "Boil some water and start cooking the lasagna noodles. Make sure they are not overcooked (otherwise will become too soft and break easily).",
+      "Preheat oven to 375°F.",
+      "Dice the vegatables finely and cook in the oil. At the end, add the ricotta cheese.",
+      "In the 9x9 tray, add a layer of sauce.",
+      "Add a layer of noodles.",
+      "Add a layer of veg mix.",
+      "Repeat layering two more times.",
+      "Cook for 35 minutes."
+    ]
+}
