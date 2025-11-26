@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Cinnamon Muffins</title>
+    <style>
+        body {
+            /* font-family: "Lucida Console", monospace; */
+            font-family: Garamond, serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Light grey background for wider screens */
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 800px; /* Fixed width for the entire content area */
+            background-color: #ffffff; /* White background for the content */
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+            max-width: 100%; /* Allow container to scale down on smaller screens */
+            box-sizing: border-box;
+        }
+
+        .recipe-header {
+            width: 100%;
+            height: 300px; /* Fixed height for the image container */
+            overflow: hidden; /* Crop overflow */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .recipe-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Scale image to fill the container while cropping overflow */
+            object-position: center; /* Center the image */
+            border-radius: 8px;
+
+        }
+
+        .title {
+            font-family: Papyrus, fantasy;
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+            margin: 0;
+            padding: 10px;
+            border-bottom: 2px solid #333;  /* Underline with border */
+            display: inline-block;  /* Allows for shorter underline */
+        }
+
+        .recipe-container {
+            display: flex;
+        }
+
+        .ingredients, .instructions {
+            width: 50%; /* Each column takes up 50% of the container width */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .ingredients {
+            background-color: #f5e9d4; /* Light beige color for ingredients */
+        }
+
+        .instructions {
+            background-color: #ffffff; /* White color for instructions */
+        }
+
+        .subsection {
+            margin-top: 4px;
+            margin-bottom: 4px;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        h2, h3 {
+            margin-top: 10;
+        }
+
+        .servings-time {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        ol, ul {
+            padding-left: 20px;
+        }
+
+        .strikethrough {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 600px) {
+            .recipe-container {
+                flex-direction: column; /* Stack columns vertically */
+            }
+
+            .ingredients, .instructions {
+                width: 100%; /* Make each column full-width */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="recipe-header">
+            <img src="../images/apple_cinnamon_muffins.jpg" alt="Apple Cinnamon Muffins">
+        </div>
+
+        <div class="recipe-container">
+            <div class="ingredients">
+                <h1 class="title">Apple Cinnamon Muffins</h1>
+                <div class="servings-time">
+                    <span>Servings: 12 servings</span>
+                    <span>Time: 60 minutes</span>
+                </div>
+                <h2>Equipment</h2>
+                <ul>
+                    
+                        <li class="clickable">12 count muffin pan</li>
+                    
+                </ul>
+                <h2>Ingredients</h2>
+                <ul>
+                    
+                        <li class="clickable">Topping:</li>
+                    
+                        <li class="clickable">1/3 cup light brown sugar</li>
+                    
+                        <li class="clickable">1 tsp cinnamon</li>
+                    
+                        <li class="clickable">1/4 cup unsalted butter (melted)</li>
+                    
+                        <li class="clickable">1/3 cup whole wheat flour</li>
+                    
+                        <li class="clickable">2/3 cup rolled oats</li>
+                    
+                        <li class="clickable">Muffin:</li>
+                    
+                        <li class="clickable">1 cups whole wheat flour</li>
+                    
+                        <li class="clickable">0.75 cup all purpose flour</li>
+                    
+                        <li class="clickable">1 tsp baking soda</li>
+                    
+                        <li class="clickable">1 tsp baking powder</li>
+                    
+                        <li class="clickable">1 tsp ground cinnamon</li>
+                    
+                        <li class="clickable">1/2 tsp salt</li>
+                    
+                        <li class="clickable">1/2 cup unslated butter (softened)</li>
+                    
+                        <li class="clickable">0.75 cup granulated/light brown sugar</li>
+                    
+                        <li class="clickable">2 large eggs</li>
+                    
+                        <li class="clickable">1/2 cup greek yogurt</li>
+                    
+                        <li class="clickable">1/4 cup milk</li>
+                    
+                        <li class="clickable">1 tsp vanilla extract</li>
+                    
+                        <li class="clickable">1.5 cups peeled and chopped apples (~<2 medium apples, dice to about 1-0.5 inch pieces)</li>
+                    
+                </ul>
+            </div>
+            <div class="instructions">
+                <h2>Directions</h2>
+                <ol>
+                    
+                        <li class="clickable">Preheat the oven to 425°F.</li>
+                    
+                        <li class="clickable">Crumb topping - mix the dry ingredients first, then add the melted butter. Try to keep large clumps from breaking apart (do not over mix). Set asside.</li>
+                    
+                        <li class="clickable">Whisk the flour, baking soda, baking powder, cinnamon, and salt together in a large bowl.</li>
+                    
+                        <li class="clickable">Cream the sugar and butter together. Add eggs, yogurt, and vanilla extract to the sugar and butter mixture. Mix well until creamed together (might look a bit curdled)</li>
+                    
+                        <li class="clickable">Combine dry and wet in one large bowl, and mix until no flour pockets remain. Fold in the apples.</li>
+                    
+                        <li class="clickable">Evenly distribute the batter into the muffin trays (can use liner, or grease). Gently add and press the crumb topping to each muffin.</li>
+                    
+                        <li class="clickable">Bake for 5 minutes at 425°F, then bring down to 350°F for about 15-18 minutes (test with toothpick/fork).</li>
+                    
+                        <li class="clickable">Let rest for 5 minutes, then remove from baking tray</li>
+                    
+                </ol>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Add event listeners to items that should be clickable
+        document.querySelectorAll('.clickable').forEach(item => {
+            item.addEventListener('click', () => {
+                // Toggle the strikethrough effect
+                item.classList.toggle('strikethrough');
+            });
+        });
+    </script>
+
+</body>
+</html>

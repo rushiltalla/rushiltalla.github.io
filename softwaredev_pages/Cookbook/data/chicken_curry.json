@@ -1,0 +1,40 @@
+{
+    "time": "90",
+    "servings": "8 servings",
+    "tags": [
+      "Main",
+      "Savory"
+    ],
+    "equipment": [
+      "Blender"
+    ],
+    "ingredients": [
+      "Chicken Marinade:",
+      "1 tsp salt",
+      "1.75 lbs chicken",
+      "1.5 tsp ginger garlic paste",
+      "1.5 tsp chili powder",
+      "3 tbsp greek yogurt",
+      "1 tsp cumin powder",
+      "1 tsp garam masala",
+      "1/4 lime (juiced)",
+      "1 tsp turmeric",
+      "Curry:",
+      "4 roma tomatoes",
+      "2 medium onions",
+      "1 tbsp olive oil",
+      "0.5 tsp cumin seeds",
+      "0.5 tsp black mustard seeds",
+      "0.5 tsp chili powder",
+      "1 tsp salt"
+    ],
+    "steps": [
+      "In a medium bowl, mix together the chicken marinade. Let rest for at least 1 hour.",
+      "Finely dice the tomatoes and onions.",
+      "Heat the oil in a pan on medium heat. Roast the cumin seeds and black mustard seeds.",
+      "Add the tomatoes and onions, along with the chili powder and salt. Let this cook until the onions are translucent.",
+      "Blend the tomato and onion mixture so that it forms a paste.",
+      "Add the chicken to the pan and cook for 5 minutes, make sure to stir/flip the pieces.",
+      "Add the tomato and onion gravy and cook for around 10 more minutes (check that the chicken is fully cooked)."
+    ]
+}

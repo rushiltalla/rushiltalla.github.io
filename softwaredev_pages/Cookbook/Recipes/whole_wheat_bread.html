@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whole Wheat Bread</title>
+    <style>
+        body {
+            /* font-family: "Lucida Console", monospace; */
+            font-family: Garamond, serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Light grey background for wider screens */
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 800px; /* Fixed width for the entire content area */
+            background-color: #ffffff; /* White background for the content */
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+            max-width: 100%; /* Allow container to scale down on smaller screens */
+            box-sizing: border-box;
+        }
+
+        .recipe-header {
+            width: 100%;
+            height: 300px; /* Fixed height for the image container */
+            overflow: hidden; /* Crop overflow */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .recipe-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Scale image to fill the container while cropping overflow */
+            object-position: center; /* Center the image */
+            border-radius: 8px;
+
+        }
+
+        .title {
+            font-family: Papyrus, fantasy;
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+            margin: 0;
+            padding: 10px;
+            border-bottom: 2px solid #333;  /* Underline with border */
+            display: inline-block;  /* Allows for shorter underline */
+        }
+
+        .recipe-container {
+            display: flex;
+        }
+
+        .ingredients, .instructions {
+            width: 50%; /* Each column takes up 50% of the container width */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .ingredients {
+            background-color: #f5e9d4; /* Light beige color for ingredients */
+        }
+
+        .instructions {
+            background-color: #ffffff; /* White color for instructions */
+        }
+
+        .subsection {
+            margin-top: 4px;
+            margin-bottom: 4px;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        h2, h3 {
+            margin-top: 10;
+        }
+
+        .servings-time {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        ol, ul {
+            padding-left: 20px;
+        }
+
+        .strikethrough {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 600px) {
+            .recipe-container {
+                flex-direction: column; /* Stack columns vertically */
+            }
+
+            .ingredients, .instructions {
+                width: 100%; /* Make each column full-width */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="recipe-header">
+            <img src="../images/whole_wheat_bread.jpg" alt="Whole Wheat Bread">
+        </div>
+
+        <div class="recipe-container">
+            <div class="ingredients">
+                <h1 class="title">Whole Wheat Bread</h1>
+                <div class="servings-time">
+                    <span>Servings: 8 servings</span>
+                    <span>Time: 90 minutes</span>
+                </div>
+                <h2>Equipment</h2>
+                <ul>
+                    
+                        <li class="clickable">Bread Loaf Pan</li>
+                    
+                </ul>
+                <h2>Ingredients</h2>
+                <ul>
+                    
+                        <li class="clickable">3 cups whole wheat flour</li>
+                    
+                        <li class="clickable">1/6 cup vital wheat gluten</li>
+                    
+                        <li class="clickable">2 tsp active dry yeast</li>
+                    
+                        <li class="clickable">1.25 cups very warm water (120 F)</li>
+                    
+                        <li class="clickable">1/2 tbsp salt</li>
+                    
+                        <li class="clickable">1/4 cup olive oil</li>
+                    
+                        <li class="clickable">1/4 cup honey</li>
+                    
+                        <li class="clickable">2 tsp lemon juice</li>
+                    
+                </ul>
+            </div>
+            <div class="instructions">
+                <h2>Directions</h2>
+                <ol>
+                    
+                        <li class="clickable">In a medium bowl, add the yeast to the water and mix. Cover and allow yeast to rest.</li>
+                    
+                        <li class="clickable">Mix 2 cups of the wheat flour and all of the wheat gluten together well.</li>
+                    
+                        <li class="clickable">Add the yeast mixture to the flour and combine using a stand mixer.</li>
+                    
+                        <li class="clickable">After it looks mixed, cover with a damp cloth/towel and allow the dough to rest for 10 minutes.</li>
+                    
+                        <li class="clickable">Add the salt, olive oil, honey, and lemon juice and combine. Slowly add the remaining whole wheat flour as you mix (preferably with a stand mixer).</li>
+                    
+                        <li class="clickable">Preheat the oven to 350°F, wait for 1 minute, and turn it off. This is to create a warm environment for the dough to rise.</li>
+                    
+                        <li class="clickable">After the dough is well kneaded, add to a parchment paper lined bread loaf pan. Gently press the dough so it fills the bottom of the pan.</li>
+                    
+                        <li class="clickable">Move to the warmed oven and allow to rise for 50 minutes. Keep the pan covered for 30 of those minutes, to ensure it does not dry out.</li>
+                    
+                        <li class="clickable">Without removing the pan from the oven, set the oven to 350°F and bake for 35 minutes. The internal temperature of the bread should read 205°F.</li>
+                    
+                        <li class="clickable">Remove from pan imediately to prevent condencation and allow to cool before cutting.</li>
+                    
+                </ol>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Add event listeners to items that should be clickable
+        document.querySelectorAll('.clickable').forEach(item => {
+            item.addEventListener('click', () => {
+                // Toggle the strikethrough effect
+                item.classList.toggle('strikethrough');
+            });
+        });
+    </script>
+
+</body>
+</html>

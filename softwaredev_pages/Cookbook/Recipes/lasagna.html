@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lasagna</title>
+    <style>
+        body {
+            /* font-family: "Lucida Console", monospace; */
+            font-family: Garamond, serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Light grey background for wider screens */
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 800px; /* Fixed width for the entire content area */
+            background-color: #ffffff; /* White background for the content */
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+            max-width: 100%; /* Allow container to scale down on smaller screens */
+            box-sizing: border-box;
+        }
+
+        .recipe-header {
+            width: 100%;
+            height: 300px; /* Fixed height for the image container */
+            overflow: hidden; /* Crop overflow */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .recipe-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Scale image to fill the container while cropping overflow */
+            object-position: center; /* Center the image */
+            border-radius: 8px;
+
+        }
+
+        .title {
+            font-family: Papyrus, fantasy;
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+            margin: 0;
+            padding: 10px;
+            border-bottom: 2px solid #333;  /* Underline with border */
+            display: inline-block;  /* Allows for shorter underline */
+        }
+
+        .recipe-container {
+            display: flex;
+        }
+
+        .ingredients, .instructions {
+            width: 50%; /* Each column takes up 50% of the container width */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .ingredients {
+            background-color: #f5e9d4; /* Light beige color for ingredients */
+        }
+
+        .instructions {
+            background-color: #ffffff; /* White color for instructions */
+        }
+
+        .subsection {
+            margin-top: 4px;
+            margin-bottom: 4px;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        h2, h3 {
+            margin-top: 10;
+        }
+
+        .servings-time {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        ol, ul {
+            padding-left: 20px;
+        }
+
+        .strikethrough {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 600px) {
+            .recipe-container {
+                flex-direction: column; /* Stack columns vertically */
+            }
+
+            .ingredients, .instructions {
+                width: 100%; /* Make each column full-width */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="recipe-header">
+            <img src="../images/lasagna.jpg" alt="Lasagna">
+        </div>
+
+        <div class="recipe-container">
+            <div class="ingredients">
+                <h1 class="title">Lasagna</h1>
+                <div class="servings-time">
+                    <span>Servings: 8 servings</span>
+                    <span>Time: 90 minutes</span>
+                </div>
+                <h2>Equipment</h2>
+                <ul>
+                    
+                        <li class="clickable">9x9 Baking Tray</li>
+                    
+                </ul>
+                <h2>Ingredients</h2>
+                <ul>
+                    
+                        <li class="clickable">1 bell pepper</li>
+                    
+                        <li class="clickable">1 medium onion</li>
+                    
+                        <li class="clickable">3 cloves garlic</li>
+                    
+                        <li class="clickable">1 tbsp olive oil</li>
+                    
+                        <li class="clickable">10oz ricotta cheese</li>
+                    
+                        <li class="clickable">8 oz baby bella mushrooms</li>
+                    
+                        <li class="clickable">0.5 tsp salt</li>
+                    
+                        <li class="clickable">0.5 tsp pepper</li>
+                    
+                        <li class="clickable">0.5 tsp cumin</li>
+                    
+                        <li class="clickable">Marinara Sauce</li>
+                    
+                        <li class="clickable">3 layers worth of lasagna noodles</li>
+                    
+                </ul>
+            </div>
+            <div class="instructions">
+                <h2>Directions</h2>
+                <ol>
+                    
+                        <li class="clickable">Boil some water and start cooking the lasagna noodles. Make sure they are not overcooked (otherwise will become too soft and break easily).</li>
+                    
+                        <li class="clickable">Preheat oven to 375°F.</li>
+                    
+                        <li class="clickable">Dice the vegatables finely and cook in the oil. At the end, add the ricotta cheese.</li>
+                    
+                        <li class="clickable">In the 9x9 tray, add a layer of sauce.</li>
+                    
+                        <li class="clickable">Add a layer of noodles.</li>
+                    
+                        <li class="clickable">Add a layer of veg mix.</li>
+                    
+                        <li class="clickable">Repeat layering two more times.</li>
+                    
+                        <li class="clickable">Cook for 35 minutes.</li>
+                    
+                </ol>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Add event listeners to items that should be clickable
+        document.querySelectorAll('.clickable').forEach(item => {
+            item.addEventListener('click', () => {
+                // Toggle the strikethrough effect
+                item.classList.toggle('strikethrough');
+            });
+        });
+    </script>
+
+</body>
+</html>
