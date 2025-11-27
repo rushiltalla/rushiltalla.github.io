@@ -25,7 +25,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: 1.5rem 1.2rem 2.8rem;
+      padding: 1.5rem 1.2rem 2.6rem;
       text-align: center;
       overflow: hidden;
     }
@@ -184,6 +184,18 @@
     }
 
     let audioCtx;
+    let alarmInterval;
+    let timerTextRef;
+    let timerTick;
+    let remaining = 60;
+
+    const DOUBLE_BEEP_GAP = 120;
+
+    function playDoubleBeep() {
+      playBeep();
+      setTimeout(playBeep, DOUBLE_BEEP_GAP);
+    }
+
     function playBeep() {
       audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
       audioCtx.resume();
@@ -192,11 +204,41 @@
       osc.type = 'sine';
       osc.frequency.value = 880;
       gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.35, audioCtx.currentTime + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.6);
+      gain.gain.exponentialRampToValueAtTime(0.5, audioCtx.currentTime + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.8);
       osc.connect(gain).connect(audioCtx.destination);
       osc.start();
-      osc.stop(audioCtx.currentTime + 0.6);
+      osc.stop(audioCtx.currentTime + 0.8);
+    }
+
+    function startAlarm() {
+      stopAlarm();
+      playDoubleBeep();
+      alarmInterval = setInterval(playDoubleBeep, 500 + DOUBLE_BEEP_GAP);
+      renderAlarmControls();
+    }
+
+    function stopAlarm() {
+      if (alarmInterval) {
+        clearInterval(alarmInterval);
+        alarmInterval = null;
+      }
+    }
+
+    function renderAlarmControls() {
+      const controls = document.getElementById('controls');
+      controls.innerHTML = '';
+      if (timerTextRef) controls.appendChild(timerTextRef);
+      const doneBtn = document.createElement('button');
+      doneBtn.className = 'primary';
+      doneBtn.style.background = '#ef4444';
+      doneBtn.style.color = '#fff';
+      doneBtn.textContent = 'Done';
+      doneBtn.onclick = () => {
+        stopAlarm();
+        window.close();
+      };
+      controls.appendChild(doneBtn);
     }
 
     function setupTimer() {
@@ -211,30 +253,112 @@
       const timerText = document.createElement('div');
       timerText.className = 'timer';
       controls.appendChild(timerText);
+      timerTextRef = timerText;
+      const actionRow = document.createElement('div');
+      actionRow.style.display = 'flex';
+      actionRow.style.gap = '0.55rem';
+      actionRow.style.marginTop = '0.6rem';
+      controls.appendChild(actionRow);
+
+      const updateCountdown = () => {
+        const mins = Math.floor(remaining / 60).toString().padStart(2, '0');
+        const secs = (remaining % 60).toString().padStart(2, '0');
+        startBtn.textContent = `${mins}:${secs}`;
+      };
+
+      const stopTimer = () => {
+        if (timerTick) {
+          clearInterval(timerTick);
+          timerTick = null;
+        }
+      };
+
+      const tick = () => {
+        remaining -= 1;
+        if (remaining === 15) playDoubleBeep();
+        if (remaining <= 0) {
+          stopTimer();
+          startBtn.textContent = '00:00';
+          startAlarm();
+          timerText.textContent = 'Time!';
+          return;
+        }
+        updateCountdown();
+      };
+
+      const renderTimerControls = (state) => {
+        actionRow.innerHTML = '';
+        if (state === 'running') {
+          const pauseBtn = document.createElement('button');
+          pauseBtn.className = 'primary';
+          pauseBtn.style.background = '#0f172a';
+          pauseBtn.style.color = '#fff';
+          pauseBtn.textContent = 'Pause';
+          pauseBtn.onclick = () => {
+            stopTimer();
+            timerText.textContent = 'Paused';
+            renderTimerControls('paused');
+          };
+
+          const stopBtn = document.createElement('button');
+          stopBtn.className = 'primary';
+          stopBtn.style.background = '#ef4444';
+          stopBtn.style.color = '#fff';
+          stopBtn.textContent = 'Stop';
+          stopBtn.onclick = () => {
+            stopTimer();
+            stopAlarm();
+            window.close();
+          };
+
+          actionRow.appendChild(pauseBtn);
+          actionRow.appendChild(stopBtn);
+        } else if (state === 'paused') {
+          const resumeBtn = document.createElement('button');
+          resumeBtn.className = 'primary';
+          resumeBtn.style.background = '#16a34a';
+          resumeBtn.style.color = '#fff';
+          resumeBtn.textContent = 'Resume';
+          resumeBtn.onclick = () => {
+            timerText.textContent = 'Drawing...';
+            renderTimerControls('running');
+            timerTick = setInterval(tick, 1000);
+          };
+
+          const stopBtn = document.createElement('button');
+          stopBtn.className = 'primary';
+          stopBtn.style.background = '#ef4444';
+          stopBtn.style.color = '#fff';
+          stopBtn.textContent = 'Stop';
+          stopBtn.onclick = () => {
+            stopAlarm();
+            window.close();
+          };
+
+          actionRow.appendChild(resumeBtn);
+          actionRow.appendChild(stopBtn);
+        }
+      };
+
+      const beginCountdown = () => {
+        timerText.textContent = 'Drawing...';
+        renderTimerControls('running');
+        updateCountdown();
+        timerTick = setInterval(tick, 1000);
+      };
+
       startBtn.onclick = () => {
         startBtn.disabled = true;
         audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
         audioCtx.resume();
-        let remaining = 60;
-        startBtn.textContent = '01:00';
-        timerText.textContent = 'Drawing...';
-        const tick = setInterval(() => {
-          remaining -= 1;
-          if (remaining <= 0) {
-            clearInterval(tick);
-            playBeep();
-            timerText.textContent = 'Time!';
-            setTimeout(() => window.close(), 500);
-          } else {
-            const mins = Math.floor(remaining / 60).toString().padStart(2, '0');
-            const secs = (remaining % 60).toString().padStart(2, '0');
-            startBtn.textContent = `${mins}:${secs}`;
-          }
-        }, 1000);
+        remaining = 60;
+        stopTimer();
+        beginCountdown();
       };
     }
 
     render();
+    window.addEventListener('beforeunload', stopAlarm);
   </script>
 </body>
 </html>
