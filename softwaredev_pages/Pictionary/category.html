@@ -209,11 +209,30 @@
     }
 
     let audioCtx;
+    let audioUnlocked = false;
     let alarmInterval;
     let timerTick;
     let remaining = 60;
 
     const DOUBLE_BEEP_GAP = 120;
+
+    function ensureAudioUnlocked() {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      audioCtx.resume();
+      if (audioUnlocked) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        gain.gain.value = 0.0001;
+        osc.frequency.value = 440;
+        osc.connect(gain).connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.02);
+        audioUnlocked = true;
+      } catch {
+        // ignore if context can't start yet
+      }
+    }
 
     function playDoubleBeep() {
       playBeep();
@@ -267,17 +286,29 @@
     function setupTimer() {
       const controls = document.getElementById('controls');
       controls.innerHTML = '';
+      const actionRow = document.createElement('div');
+      actionRow.style.display = 'grid';
+      actionRow.style.gridTemplateColumns = '1fr';
+      actionRow.style.gap = '0.55rem';
+      controls.appendChild(actionRow);
       const startBtn = document.createElement('button');
       startBtn.className = 'primary';
       startBtn.textContent = 'Start 1-minute Timer';
       startBtn.style.background = 'rgba(0,0,0,0.75)';
       startBtn.style.color = '#fff';
-      controls.appendChild(startBtn);
-      const actionRow = document.createElement('div');
-      actionRow.style.display = 'flex';
-      actionRow.style.gap = '0.55rem';
-      actionRow.style.marginTop = '0.6rem';
-      controls.appendChild(actionRow);
+      actionRow.appendChild(startBtn);
+      const stopNow = document.createElement('button');
+      stopNow.className = 'primary';
+      stopNow.textContent = 'End';
+      stopNow.style.background = '#ef4444';
+      stopNow.style.color = '#fff';
+      stopNow.style.display = 'none';
+      stopNow.onclick = () => {
+        stopTimer();
+        stopAlarm();
+        window.close();
+      };
+      actionRow.appendChild(stopNow);
 
       const updateCountdown = () => {
         const mins = Math.floor(remaining / 60).toString().padStart(2, '0');
@@ -304,70 +335,19 @@
         updateCountdown();
       };
 
-      const renderTimerControls = (state) => {
-        actionRow.innerHTML = '';
-        if (state === 'running') {
-          const pauseBtn = document.createElement('button');
-          pauseBtn.className = 'primary';
-          pauseBtn.style.background = '#0f172a';
-          pauseBtn.style.color = '#fff';
-          pauseBtn.textContent = 'Pause';
-          pauseBtn.onclick = () => {
-            stopTimer();
-            renderTimerControls('paused');
-          };
-
-          const stopBtn = document.createElement('button');
-          stopBtn.className = 'primary';
-          stopBtn.style.background = '#ef4444';
-          stopBtn.style.color = '#fff';
-          stopBtn.textContent = 'End';
-          stopBtn.onclick = () => {
-            stopTimer();
-            stopAlarm();
-            window.close();
-          };
-
-          actionRow.appendChild(pauseBtn);
-          actionRow.appendChild(stopBtn);
-        } else if (state === 'paused') {
-          const resumeBtn = document.createElement('button');
-          resumeBtn.className = 'primary';
-          resumeBtn.style.background = '#16a34a';
-          resumeBtn.style.color = '#fff';
-          resumeBtn.textContent = 'Resume';
-          resumeBtn.onclick = () => {
-            renderTimerControls('running');
-            timerTick = setInterval(tick, 1000);
-          };
-
-          const stopBtn = document.createElement('button');
-          stopBtn.className = 'primary';
-          stopBtn.style.background = '#ef4444';
-          stopBtn.style.color = '#fff';
-          stopBtn.textContent = 'End';
-          stopBtn.onclick = () => {
-            stopAlarm();
-            window.close();
-          };
-
-          actionRow.appendChild(resumeBtn);
-          actionRow.appendChild(stopBtn);
-        }
-      };
-
       const beginCountdown = () => {
-        renderTimerControls('running');
+        actionRow.style.gridTemplateColumns = '1fr 1fr';
+        stopNow.style.display = 'block';
         updateCountdown();
         timerTick = setInterval(tick, 1000);
       };
 
       startBtn.onclick = () => {
         startBtn.disabled = true;
-        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-        audioCtx.resume();
+        ensureAudioUnlocked();
         remaining = 60;
         stopTimer();
+        stopNow.style.visibility = 'visible';
         beginCountdown();
       };
     }
