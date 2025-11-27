@@ -36,6 +36,27 @@
       position: relative;
       display: inline-block;
     }
+    .twox-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      border: 2px solid rgba(0,0,0,0.08);
+      background: #fff;
+      color: var(--ink);
+      padding: 0.5rem 0.9rem;
+      border-radius: 12px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+    }
+    .twox-toggle.active {
+      background: #0f172a;
+      color: #fff;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.2);
+      transform: translateY(-1px);
+    }
     .control-toggle {
       border: none;
       background: rgba(255, 255, 255, 0.9);
@@ -207,6 +228,7 @@
       </div>
     </div>
   </header>
+  <button class="twox-toggle" id="twox-toggle">2x</button>
   <main>
     <div>
       <div class="title">Pictionary Draw Deck</div>
@@ -242,6 +264,8 @@
       object: 'Object'
     };
     const STORAGE_KEY = 'pictionaryWords';
+    const TWOX_ACTIVE_KEY = 'twoxActive';
+    const TWOX_PAYLOAD_PREFIX = 'twox:';
     const initialWords = {
   allPlay: [
     "WiFi Outage",
@@ -570,7 +594,13 @@
       Object.keys(LABELS).forEach(key => {
         const card = document.createElement('div');
         card.className = 'cat-card';
-        card.onclick = () => openCategory(key);
+        card.onclick = () => {
+          if (twoxActive) {
+            startTwoXFlow(key);
+          } else {
+            openCategory(key);
+          }
+        };
         const badge = document.createElement('div');
         badge.className = 'badge';
         badge.style.background = COLORS[key];
@@ -632,6 +662,63 @@
       });
     }
 
+    function updateTwoXToggle() {
+      const btn = document.getElementById('twox-toggle');
+      if (!btn) return;
+      btn.classList.toggle('active', twoxActive);
+    }
+
+    function setTwoXActive(state) {
+      twoxActive = state;
+      sessionStorage.setItem(TWOX_ACTIVE_KEY, state ? '1' : '0');
+      updateTwoXToggle();
+    }
+
+    function setupTwoXToggle() {
+      const btn = document.getElementById('twox-toggle');
+      if (!btn) return;
+      twoxActive = sessionStorage.getItem(TWOX_ACTIVE_KEY) === '1';
+      updateTwoXToggle();
+      btn.onclick = () => setTwoXActive(!twoxActive);
+    }
+
+    function startTwoXFlow(primaryKey) {
+      const words = loadWords();
+      const payload = {};
+      let primaryWord = null;
+
+      Object.keys(LABELS).forEach(key => {
+        const list = words[key] || [];
+        if (list.length === 0) {
+          payload[key] = null;
+          return;
+        }
+        const idx = Math.floor(Math.random() * list.length);
+        const [word] = list.splice(idx, 1);
+        payload[key] = { word, remaining: list.length };
+        if (key === primaryKey) {
+          primaryWord = word;
+        }
+      });
+
+      if (!primaryWord) {
+        alert('No words left in this category for 2x mode.');
+        return;
+      }
+
+      saveWords(words);
+      const id = `twox-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      sessionStorage.setItem(
+        `${TWOX_PAYLOAD_PREFIX}${id}`,
+        JSON.stringify({
+          primary: primaryKey,
+          words: payload
+        })
+      );
+      window.open(`twox.html?id=${encodeURIComponent(id)}`, '_blank');
+      setTwoXActive(false);
+    }
+
     function openCategory(key) {
       const words = loadWords();
       if (!words[key] || words[key].length === 0) {
@@ -671,6 +758,7 @@
     renderCategories();
     renderEditor();
     setupControls();
+    setupTwoXToggle();
   </script>
 </body>
 </html>

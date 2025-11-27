@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pictionary Word</title>
+  <title>Pictionary 2x Draw</title>
   <style>
     :root {
       --orange: #ff8a00;
@@ -14,6 +14,7 @@
       --ink: #0d1015;
       --muted: #1f262f;
       --panel: rgba(255, 255, 255, 0.12);
+      --bg: #f5f7fb;
     }
     * { box-sizing: border-box; }
     body {
@@ -23,80 +24,54 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.5rem 1.2rem 2.6rem;
-      text-align: center;
+      background: var(--bg);
+      position: relative;
       overflow: hidden;
     }
-    header {
-      width: 100%;
+    .half {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      padding: 1.4rem;
       gap: 0.6rem;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    header .pill { display: none; }
-    .two-btn {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      border: none;
-      background: rgba(255, 255, 255, 0.9);
-      color: var(--ink);
-      padding: 0.45rem 0.85rem;
-      border-radius: 12px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-    }
-    .two-btn:active { box-shadow: none; }
-    .pill {
-      padding: 0.3rem 0.8rem;
-      border-radius: 999px;
-      background: var(--panel);
-      color: var(--ink);
-      font-size: 0.9rem;
-      font-weight: 700;
-    }
-    .word {
-      font-size: clamp(2.2rem, 7vw, 3.4rem);
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      margin: 2rem 0;
-      padding: 1rem 1.3rem;
-      border-radius: 18px;
-      background: var(--panel);
-      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.12);
-    }
-    .empty {
-      font-size: 1.1rem;
-      color: #14202f;
-      background: rgba(255, 255, 255, 0.3);
-      padding: 1rem;
-      border-radius: 16px;
-      line-height: 1.4;
-    }
-    main {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
+      text-align: center;
       flex: 1;
     }
-    .actions {
-      width: 100%;
-      max-width: 520px;
-      margin-top: 0.4rem;
+    .word {
+      font-size: clamp(2.1rem, 6vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      padding: 1rem 1.3rem;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.18);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.12);
     }
-    .spacer { height: 90px; pointer-events: none; }
+    .pill {
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--ink);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      font-size: 0.95rem;
+    }
+    .controls {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1rem;
+      z-index: 5;
+      width: min(520px, 92vw);
+    }
     .primary {
       width: 100%;
+      max-width: 360px;
       border: none;
       border-radius: 14px;
       padding: 1rem;
@@ -105,25 +80,39 @@
       cursor: pointer;
       box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
       transition: transform 150ms ease, box-shadow 150ms ease;
+      background: rgba(0,0,0,0.75);
+      color: #fff;
     }
     .primary:active { transform: translateY(1px); box-shadow: none; }
-    .timer {
-      margin-top: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: var(--muted);
+    .pick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.6rem;
+      width: 100%;
+      max-width: 520px;
+    }
+    .pick-btn {
+      border: none;
+      border-radius: 12px;
+      padding: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+    }
+    .empty {
+      font-size: 1.05rem;
+      background: rgba(255,255,255,0.3);
+      padding: 1rem;
+      border-radius: 14px;
+      line-height: 1.5;
     }
   </style>
 </head>
 <body>
-  <header>
-    <span id="category-label"></span>
-    <span class="pill" id="remaining"></span>
-  </header>
-  <main id="content"></main>
-
-  <div class="actions" id="controls"></div>
-  <div class="actions spacer" aria-hidden="true"></div>
+  <div class="half" id="top-half"></div>
+  <div class="controls" id="controls"></div>
+  <div class="half" id="bottom-half"></div>
 
   <script>
     const COLORS = {
@@ -140,38 +129,25 @@
       personPlace: 'Person, Place, etc.',
       object: 'Object'
     };
-    const initialWords = {
-      allPlay: ['Sunrise', 'Bridge', 'Treasure', 'Lantern', 'Snowball', 'Festival'],
-      difficult: ['Paradox', 'Hypothesis', 'Eclipse', 'Labyrinth', 'Metaphor', 'Alchemy'],
-      action: ['Juggle', 'Climb', 'Swim', 'Whisper', 'Balance', 'Sneak'],
-      personPlace: ['Teacher', 'Chef', 'Library', 'Space Station', 'Museum', 'Island'],
-      object: ['Compass', 'Backpack', 'Guitar', 'Umbrella', 'Camera', 'Clock']
-    };
-    const STORAGE_KEY = 'pictionaryWords';
 
     const params = new URLSearchParams(location.search);
-    const category = params.get('category');
+    const payloadId = params.get('id');
+    const storageKey = payloadId ? `twox:${payloadId}` : null;
+    let data;
+    let secondKey = null;
+    let timerTick;
+    let remaining = 60;
+    let audioCtx;
+    let alarmInterval;
 
-    function loadWords() {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        try { return JSON.parse(stored); }
-        catch { localStorage.removeItem(STORAGE_KEY); }
-      }
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(initialWords));
-      return JSON.parse(JSON.stringify(initialWords));
-    }
-    function saveWords(words) { localStorage.setItem(STORAGE_KEY, JSON.stringify(words)); }
+    const DOUBLE_BEEP_GAP = 120;
 
-    function pickWord(key) {
-      const words = loadWords();
-      const list = words[key] || [];
-      if (list.length === 0) return { word: null, remaining: 0 };
-      const idx = Math.floor(Math.random() * list.length);
-      const [word] = list.splice(idx, 1);
-      words[key] = list;
-      saveWords(words);
-      return { word, remaining: list.length };
+    function loadPayload() {
+      if (!storageKey) return null;
+      const raw = sessionStorage.getItem(storageKey);
+      if (!raw) return null;
+      try { return JSON.parse(raw); }
+      catch { return null; }
     }
 
     function maybeAllPlayPopup(key) {
@@ -179,41 +155,6 @@
         setTimeout(() => alert('All Play! Anyone can guess this word.'), 0);
       }
     }
-
-    function renderSingle() {
-      if (!category || !LABELS[category]) {
-        document.body.style.background = '#fafafa';
-        document.getElementById('content').innerHTML = '<div class="empty">Unknown category. Please open from the main page.</div>';
-        return;
-      }
-      document.body.style.background = COLORS[category];
-      document.getElementById('category-label').textContent = LABELS[category];
-      const { word, remaining } = pickWord(category);
-      const content = document.getElementById('content');
-      if (!word) {
-        content.innerHTML = '<div class="empty">No words left here. Reset or add more from the main page.</div>';
-        document.getElementById('controls').innerHTML = '';
-        return;
-      }
-      maybeAllPlayPopup(category);
-      const wordEl = document.createElement('div');
-      wordEl.className = 'word';
-      wordEl.textContent = word;
-      content.innerHTML = '';
-      content.appendChild(wordEl);
-      setupTimer();
-    }
-
-    function render() {
-      renderSingle();
-    }
-
-    let audioCtx;
-    let alarmInterval;
-    let timerTick;
-    let remaining = 60;
-
-    const DOUBLE_BEEP_GAP = 120;
 
     function playDoubleBeep() {
       playBeep();
@@ -235,18 +176,18 @@
       osc.stop(audioCtx.currentTime + 0.8);
     }
 
-    function startAlarm() {
-      stopAlarm();
-      playDoubleBeep();
-      alarmInterval = setInterval(playDoubleBeep, 500 + DOUBLE_BEEP_GAP);
-      renderAlarmControls();
-    }
-
     function stopAlarm() {
       if (alarmInterval) {
         clearInterval(alarmInterval);
         alarmInterval = null;
       }
+    }
+
+    function startAlarm() {
+      stopAlarm();
+      playDoubleBeep();
+      alarmInterval = setInterval(playDoubleBeep, 500 + DOUBLE_BEEP_GAP);
+      renderAlarmControls();
     }
 
     function renderAlarmControls() {
@@ -264,47 +205,54 @@
       controls.appendChild(doneBtn);
     }
 
-    function setupTimer() {
+    function renderTimer() {
       const controls = document.getElementById('controls');
       controls.innerHTML = '';
       const startBtn = document.createElement('button');
       startBtn.className = 'primary';
       startBtn.textContent = 'Start 1-minute Timer';
-      startBtn.style.background = 'rgba(0,0,0,0.75)';
-      startBtn.style.color = '#fff';
+      startBtn.onclick = () => {
+        startBtn.disabled = true;
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        audioCtx.resume();
+        remaining = 60;
+        stopTimer();
+        beginCountdown(startBtn);
+      };
       controls.appendChild(startBtn);
+
       const actionRow = document.createElement('div');
       actionRow.style.display = 'flex';
       actionRow.style.gap = '0.55rem';
       actionRow.style.marginTop = '0.6rem';
       controls.appendChild(actionRow);
 
-      const updateCountdown = () => {
+      function updateCountdown(btn) {
         const mins = Math.floor(remaining / 60).toString().padStart(2, '0');
         const secs = (remaining % 60).toString().padStart(2, '0');
-        startBtn.textContent = `${mins}:${secs}`;
-      };
+        btn.textContent = `${mins}:${secs}`;
+      }
 
-      const stopTimer = () => {
+      function stopTimer() {
         if (timerTick) {
           clearInterval(timerTick);
           timerTick = null;
         }
-      };
+      }
 
-      const tick = () => {
+      function tick(btn) {
         remaining -= 1;
         if (remaining === 15) playDoubleBeep();
         if (remaining <= 0) {
           stopTimer();
-          startBtn.textContent = '00:00';
+          btn.textContent = '00:00';
           startAlarm();
           return;
         }
-        updateCountdown();
-      };
+        updateCountdown(btn);
+      }
 
-      const renderTimerControls = (state) => {
+      function renderTimerControls(state) {
         actionRow.innerHTML = '';
         if (state === 'running') {
           const pauseBtn = document.createElement('button');
@@ -338,7 +286,7 @@
           resumeBtn.textContent = 'Resume';
           resumeBtn.onclick = () => {
             renderTimerControls('running');
-            timerTick = setInterval(tick, 1000);
+            timerTick = setInterval(() => tick(startBtn), 1000);
           };
 
           const stopBtn = document.createElement('button');
@@ -354,25 +302,75 @@
           actionRow.appendChild(resumeBtn);
           actionRow.appendChild(stopBtn);
         }
-      };
+      }
 
-      const beginCountdown = () => {
+      function beginCountdown(btn) {
         renderTimerControls('running');
-        updateCountdown();
-        timerTick = setInterval(tick, 1000);
-      };
-
-      startBtn.onclick = () => {
-        startBtn.disabled = true;
-        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-        audioCtx.resume();
-        remaining = 60;
-        stopTimer();
-        beginCountdown();
-      };
+        updateCountdown(btn);
+        timerTick = setInterval(() => tick(btn), 1000);
+      }
     }
 
-    render();
+    function renderTop() {
+      const top = document.getElementById('top-half');
+      const primaryKey = data.primary;
+      const primaryWord = data.words[primaryKey]?.word || 'N/A';
+      top.style.background = COLORS[primaryKey] || '#f5f7fb';
+      top.innerHTML = `
+        <div class="word">${primaryWord}</div>
+        <div class="pill">${LABELS[primaryKey]}</div>
+      `;
+      maybeAllPlayPopup(primaryKey);
+    }
+
+    function renderBottom() {
+      const bottom = document.getElementById('bottom-half');
+      if (!secondKey) {
+        const choices = Object.keys(data.words).filter(k => k !== data.primary && data.words[k] && data.words[k].word);
+        if (choices.length === 0) {
+          bottom.style.background = '#eef2f7';
+          bottom.innerHTML = `<div class="empty">No other categories have words left.</div>`;
+          document.getElementById('controls').innerHTML = '';
+          return;
+        }
+        bottom.style.background = '#eef2f7';
+        const buttons = choices.map(k => {
+          const { word } = data.words[k];
+          return `<button class="pick-btn" data-key="${k}" style="background:${COLORS[k]};color:#0d1015;"><strong>${word}</strong></button>`;
+        }).join('');
+        bottom.innerHTML = `
+          <div class="pill">Pick your second draw</div>
+          <div class="pick-grid">${buttons}</div>
+        `;
+        document.querySelectorAll('[data-key]').forEach(btn => {
+          btn.onclick = () => {
+            secondKey = btn.getAttribute('data-key');
+            maybeAllPlayPopup(secondKey);
+            renderBottom();
+            renderTimer();
+          };
+        });
+      } else {
+        const { word } = data.words[secondKey];
+        bottom.style.background = COLORS[secondKey] || '#f5f7fb';
+        bottom.innerHTML = `
+          <div class="word">${word}</div>
+          <div class="pill">${LABELS[secondKey]}</div>
+        `;
+      }
+    }
+
+    function init() {
+      data = loadPayload();
+      if (!data || !data.primary || !data.words) {
+        document.body.innerHTML = '<div class="half" style="grid-row: 1 / span 3;"><div class="empty">Missing 2x data. Please start from the main page.</div></div>';
+        return;
+      }
+      renderTop();
+      renderBottom();
+    }
+
+    init();
     window.addEventListener('beforeunload', stopAlarm);
   </script>
 </body>
