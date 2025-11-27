@@ -27,31 +27,55 @@
       overflow: hidden;
     }
     header {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
       position: fixed;
       top: 1rem;
       left: 1rem;
       z-index: 10;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 999px;
-      box-shadow: var(--shadow);
-      padding: 0.35rem 0.6rem;
     }
+    .control-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .control-toggle {
+      border: none;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--ink);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 150ms ease, box-shadow 150ms ease;
+    }
+    .control-toggle:hover { transform: translateY(-1px); }
+    .control-toggle:active { transform: translateY(0); box-shadow: none; }
+    .control-menu {
+      position: absolute;
+      top: 52px;
+      left: 0;
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 0.5rem;
+      display: none;
+      gap: 0.4rem;
+      min-width: 160px;
+    }
+    .control-menu.active { display: flex; flex-direction: column; }
     .control-btn {
       border: none;
       background: var(--panel);
       color: var(--ink);
       padding: 0.55rem 0.9rem;
-      border-radius: 999px;
+      border-radius: 10px;
       font-weight: 600;
       font-size: 0.95rem;
       cursor: pointer;
-      box-shadow: var(--shadow);
       transition: transform 150ms ease, box-shadow 150ms ease;
+      box-shadow: var(--shadow);
     }
-    .control-btn:hover { transform: translateY(-1px); }
     .control-btn:active { transform: translateY(0); box-shadow: none; }
     main {
       display: flex;
@@ -173,13 +197,17 @@
 </head>
 <body>
   <header>
-    <button class="control-btn" id="reset-btn">Reset</button>
-    <button class="control-btn" id="modify-btn">Modify</button>
+    <div class="control-wrap">
+      <button class="control-toggle" id="control-toggle">...</button>
+      <div class="control-menu" id="control-menu">
+        <button class="control-btn" id="reset-btn">Reset</button>
+        <button class="control-btn" id="modify-btn">Modify</button>
+      </div>
+    </div>
   </header>
   <main>
     <div>
       <div class="title">Pictionary Draw Deck</div>
-      <div class="subtitle">Pick a tile to get a fresh prompt</div>
     </div>
     <section class="categories" id="category-list"></section>
   </main>
@@ -228,6 +256,7 @@
     function resetWords() {
       saveWords(initialWords);
       renderEditor();
+      closeControls();
       alert('Word lists reset to defaults.');
     }
 
@@ -308,6 +337,11 @@
       window.open(`category.html?category=${encodeURIComponent(key)}`, '_blank');
     }
 
+    function closeControls() {
+      const menu = document.getElementById('control-menu');
+      if (menu) menu.classList.remove('active');
+    }
+
     function setupControls() {
       document.getElementById('reset-btn').onclick = resetWords;
       const modifyBtn = document.getElementById('modify-btn');
@@ -317,6 +351,17 @@
         modifyBtn.textContent = active ? 'Done' : 'Modify';
         if (active) renderEditor();
       };
+
+      const toggle = document.getElementById('control-toggle');
+      const menu = document.getElementById('control-menu');
+      toggle.onclick = (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('active');
+      };
+      document.addEventListener('click', (e) => {
+        const wrap = document.querySelector('.control-wrap');
+        if (!wrap.contains(e.target)) closeControls();
+      });
     }
 
     renderCategories();

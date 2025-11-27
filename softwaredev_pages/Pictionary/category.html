@@ -25,7 +25,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: 2.5rem 1.2rem 1.8rem;
+      padding: 1.5rem 1.2rem 2.8rem;
       text-align: center;
       overflow: hidden;
     }
@@ -66,9 +66,17 @@
       border-radius: 16px;
       line-height: 1.4;
     }
+    main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      flex: 1;
+    }
     .actions {
       width: 100%;
       max-width: 520px;
+      margin-top: 0.4rem;
     }
     .primary {
       width: 100%;
@@ -99,8 +107,6 @@
   <main id="content"></main>
 
   <div class="actions" id="controls"></div>
-
-  <audio id="beep" preload="auto" src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQwAAAAA//8AAP//AAD//wAA//8AAP//AAD//wAA"></audio>
 
   <script>
     const COLORS = {
@@ -177,12 +183,28 @@
       setupTimer();
     }
 
+    let audioCtx;
+    function playBeep() {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = 880;
+      gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.35, audioCtx.currentTime + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.6);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.6);
+    }
+
     function setupTimer() {
       const controls = document.getElementById('controls');
       controls.innerHTML = '';
       const startBtn = document.createElement('button');
       startBtn.className = 'primary';
-      startBtn.textContent = 'Start 1s Timer';
+      startBtn.textContent = 'Start 1-minute Timer';
       startBtn.style.background = 'rgba(0,0,0,0.75)';
       startBtn.style.color = '#fff';
       controls.appendChild(startBtn);
@@ -191,23 +213,22 @@
       controls.appendChild(timerText);
       startBtn.onclick = () => {
         startBtn.disabled = true;
-        startBtn.textContent = '1';
-        let remaining = 1;
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        audioCtx.resume();
+        let remaining = 60;
+        startBtn.textContent = '01:00';
         timerText.textContent = 'Drawing...';
         const tick = setInterval(() => {
           remaining -= 1;
           if (remaining <= 0) {
             clearInterval(tick);
-            startBtn.textContent = 'Go!';
-            document.getElementById('beep').play().catch(() => {});
+            playBeep();
             timerText.textContent = 'Time!';
-            setTimeout(() => {
-              startBtn.textContent = 'Start again';
-              startBtn.disabled = false;
-              timerText.textContent = '';
-            }, 800);
+            setTimeout(() => window.close(), 500);
           } else {
-            startBtn.textContent = remaining.toString();
+            const mins = Math.floor(remaining / 60).toString().padStart(2, '0');
+            const secs = (remaining % 60).toString().padStart(2, '0');
+            startBtn.textContent = `${mins}:${secs}`;
           }
         }, 1000);
       };
