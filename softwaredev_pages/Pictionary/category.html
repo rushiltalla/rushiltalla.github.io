@@ -78,6 +78,7 @@
       max-width: 520px;
       margin-top: 0.4rem;
     }
+    .spacer { height: 90px; pointer-events: none; }
     .primary {
       width: 100%;
       border: none;
@@ -107,6 +108,7 @@
   <main id="content"></main>
 
   <div class="actions" id="controls"></div>
+  <div class="actions spacer" aria-hidden="true"></div>
 
   <script>
     const COLORS = {
@@ -185,7 +187,6 @@
 
     let audioCtx;
     let alarmInterval;
-    let timerTextRef;
     let timerTick;
     let remaining = 60;
 
@@ -228,7 +229,6 @@
     function renderAlarmControls() {
       const controls = document.getElementById('controls');
       controls.innerHTML = '';
-      if (timerTextRef) controls.appendChild(timerTextRef);
       const doneBtn = document.createElement('button');
       doneBtn.className = 'primary';
       doneBtn.style.background = '#ef4444';
@@ -250,10 +250,6 @@
       startBtn.style.background = 'rgba(0,0,0,0.75)';
       startBtn.style.color = '#fff';
       controls.appendChild(startBtn);
-      const timerText = document.createElement('div');
-      timerText.className = 'timer';
-      controls.appendChild(timerText);
-      timerTextRef = timerText;
       const actionRow = document.createElement('div');
       actionRow.style.display = 'flex';
       actionRow.style.gap = '0.55rem';
@@ -280,7 +276,6 @@
           stopTimer();
           startBtn.textContent = '00:00';
           startAlarm();
-          timerText.textContent = 'Time!';
           return;
         }
         updateCountdown();
@@ -296,7 +291,6 @@
           pauseBtn.textContent = 'Pause';
           pauseBtn.onclick = () => {
             stopTimer();
-            timerText.textContent = 'Paused';
             renderTimerControls('paused');
           };
 
@@ -320,7 +314,6 @@
           resumeBtn.style.color = '#fff';
           resumeBtn.textContent = 'Resume';
           resumeBtn.onclick = () => {
-            timerText.textContent = 'Drawing...';
             renderTimerControls('running');
             timerTick = setInterval(tick, 1000);
           };
@@ -341,7 +334,6 @@
       };
 
       const beginCountdown = () => {
-        timerText.textContent = 'Drawing...';
         renderTimerControls('running');
         updateCountdown();
         timerTick = setInterval(tick, 1000);
