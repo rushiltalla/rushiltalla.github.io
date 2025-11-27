@@ -209,30 +209,11 @@
     }
 
     let audioCtx;
-    let audioUnlocked = false;
     let alarmInterval;
     let timerTick;
     let remaining = 60;
 
     const DOUBLE_BEEP_GAP = 120;
-
-    function ensureAudioUnlocked() {
-      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-      audioCtx.resume();
-      if (audioUnlocked) return;
-      try {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        gain.gain.value = 0.0001;
-        osc.frequency.value = 440;
-        osc.connect(gain).connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.02);
-        audioUnlocked = true;
-      } catch {
-        // ignore if context can't start yet
-      }
-    }
 
     function playDoubleBeep() {
       playBeep();
@@ -344,7 +325,9 @@
 
       startBtn.onclick = () => {
         startBtn.disabled = true;
-        ensureAudioUnlocked();
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        audioCtx.resume();
+        try { playBeep(); } catch {}
         remaining = 60;
         stopTimer();
         stopNow.style.visibility = 'visible';
