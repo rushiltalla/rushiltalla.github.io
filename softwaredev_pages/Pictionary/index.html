@@ -1,1 +1,327 @@
-Hello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pictionary Categories</title>
+  <style>
+    :root {
+      --orange: #ff8a00;
+      --green: #1fa66a;
+      --pink: #ff6fb0;
+      --yellow: #ffd447;
+      --blue: #6ad0ff;
+      --ink: #111418;
+      --muted: #4a5568;
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Inter", -apple-system, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      padding: 0.35rem 0.6rem;
+    }
+    .control-btn {
+      border: none;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 150ms ease, box-shadow 150ms ease;
+    }
+    .control-btn:hover { transform: translateY(-1px); }
+    .control-btn:active { transform: translateY(0); box-shadow: none; }
+    main {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      padding: 4rem 1.3rem 1.5rem;
+      gap: 1rem;
+      justify-content: space-between;
+    }
+    .title {
+      text-align: center;
+      font-size: 1.4rem;
+      letter-spacing: 0.02em;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      text-align: center;
+      color: var(--muted);
+      margin: -0.4rem 0 0.6rem;
+      font-size: 0.95rem;
+    }
+    .categories {
+      display: grid;
+      grid-template-rows: repeat(5, 1fr);
+      gap: 0.7rem;
+      height: 100%;
+    }
+    .cat-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-content: center;
+      justify-items: center;
+      background: var(--panel);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 0.6rem;
+      cursor: pointer;
+      transition: transform 150ms ease, box-shadow 150ms ease;
+    }
+    .cat-card:active { transform: scale(0.99); box-shadow: none; }
+    .badge {
+      width: 70px;
+      height: 70px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: #0e1116;
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      border: 2px solid rgba(0, 0, 0, 0.08);
+    }
+    .label {
+      margin-top: 0.35rem;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--ink);
+      text-align: center;
+    }
+    .editor {
+      position: fixed;
+      inset: auto 0 0 0;
+      background: rgba(255, 255, 255, 0.97);
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08);
+      border-radius: 16px 16px 0 0;
+      padding: 1rem 1rem 1.2rem;
+      transform: translateY(100%);
+      transition: transform 180ms ease;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+    .editor.active { transform: translateY(0); }
+    .edit-title {
+      font-weight: 700;
+      margin: 0 0 0.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.35rem 0 0.6rem; }
+    .chip {
+      background: #eef2f7;
+      border-radius: 12px;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.9rem;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+      transition: transform 120ms ease;
+    }
+    .chip:hover { transform: translateY(-1px); }
+    .add-row { display: flex; gap: 0.4rem; margin-bottom: 0.8rem; }
+    .add-row input {
+      flex: 1;
+      border: 1px solid #cdd4e0;
+      border-radius: 10px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.95rem;
+      background: #f8fafc;
+    }
+    .add-row button {
+      border: none;
+      background: var(--ink);
+      color: #fff;
+      padding: 0.5rem 0.8rem;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .info {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 0.3rem 0 0.8rem;
+    }
+    @media (min-width: 700px) {
+      main { max-width: 500px; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button class="control-btn" id="reset-btn">Reset</button>
+    <button class="control-btn" id="modify-btn">Modify</button>
+  </header>
+  <main>
+    <div>
+      <div class="title">Pictionary Draw Deck</div>
+      <div class="subtitle">Pick a tile to get a fresh prompt</div>
+    </div>
+    <section class="categories" id="category-list"></section>
+  </main>
+
+  <section class="editor" id="editor-panel" aria-label="Edit word lists">
+    <div class="info">Tap a word to remove it. Add new ones below each category.</div>
+    <div id="editor-content"></div>
+  </section>
+
+  <script>
+    const COLORS = {
+      allPlay: 'var(--orange)',
+      difficult: 'var(--green)',
+      action: 'var(--pink)',
+      personPlace: 'var(--yellow)',
+      object: 'var(--blue)'
+    };
+    const LABELS = {
+      allPlay: 'All Play',
+      difficult: 'Difficult',
+      action: 'Action',
+      personPlace: 'Person, Place, etc.',
+      object: 'Object'
+    };
+    const STORAGE_KEY = 'pictionaryWords';
+    const initialWords = {
+      allPlay: ['Sunrise', 'Bridge', 'Treasure', 'Lantern', 'Snowball', 'Festival'],
+      difficult: ['Paradox', 'Hypothesis', 'Eclipse', 'Labyrinth', 'Metaphor', 'Alchemy'],
+      action: ['Juggle', 'Climb', 'Swim', 'Whisper', 'Balance', 'Sneak'],
+      personPlace: ['Teacher', 'Chef', 'Library', 'Space Station', 'Museum', 'Island'],
+      object: ['Compass', 'Backpack', 'Guitar', 'Umbrella', 'Camera', 'Clock']
+    };
+
+    function loadWords() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        try { return JSON.parse(stored); }
+        catch { localStorage.removeItem(STORAGE_KEY); }
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(initialWords));
+      return JSON.parse(JSON.stringify(initialWords));
+    }
+    function saveWords(words) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(words));
+    }
+    function resetWords() {
+      saveWords(initialWords);
+      renderEditor();
+      alert('Word lists reset to defaults.');
+    }
+
+    function renderCategories() {
+      const container = document.getElementById('category-list');
+      container.innerHTML = '';
+      Object.keys(LABELS).forEach(key => {
+        const card = document.createElement('div');
+        card.className = 'cat-card';
+        card.onclick = () => openCategory(key);
+        const badge = document.createElement('div');
+        badge.className = 'badge';
+        badge.style.background = COLORS[key];
+        badge.textContent = LABELS[key].split(' ').map(w => w[0]).join('');
+        const label = document.createElement('div');
+        label.className = 'label';
+        label.textContent = LABELS[key];
+        card.appendChild(badge);
+        card.appendChild(label);
+        container.appendChild(card);
+      });
+    }
+
+    function renderEditor() {
+      const editorContent = document.getElementById('editor-content');
+      const words = loadWords();
+      editorContent.innerHTML = '';
+      Object.keys(LABELS).forEach(key => {
+        const wrapper = document.createElement('div');
+        const title = document.createElement('div');
+        title.className = 'edit-title';
+        title.innerHTML = `<span>${LABELS[key]}</span><span style="color:${COLORS[key]}">●</span>`;
+        const chips = document.createElement('div');
+        chips.className = 'chip-row';
+        (words[key] || []).forEach(item => {
+          const chip = document.createElement('div');
+          chip.className = 'chip';
+          chip.textContent = item;
+          chip.onclick = () => {
+            const updated = loadWords();
+            updated[key] = updated[key].filter(w => w !== item);
+            saveWords(updated);
+            renderEditor();
+          };
+          chips.appendChild(chip);
+        });
+        const addRow = document.createElement('div');
+        addRow.className = 'add-row';
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = 'Add new word';
+        const addBtn = document.createElement('button');
+        addBtn.textContent = 'Add';
+        addBtn.onclick = () => {
+          const value = input.value.trim();
+          if (!value) return;
+          const updated = loadWords();
+          updated[key] = [...(updated[key] || []), value];
+          saveWords(updated);
+          input.value = '';
+          renderEditor();
+        };
+        addRow.appendChild(input);
+        addRow.appendChild(addBtn);
+        wrapper.appendChild(title);
+        wrapper.appendChild(chips);
+        wrapper.appendChild(addRow);
+        editorContent.appendChild(wrapper);
+      });
+    }
+
+    function openCategory(key) {
+      const words = loadWords();
+      if (!words[key] || words[key].length === 0) {
+        alert('No words left in this category. Reset or add more.');
+        return;
+      }
+      window.open(`category.html?category=${encodeURIComponent(key)}`, '_blank');
+    }
+
+    function setupControls() {
+      document.getElementById('reset-btn').onclick = resetWords;
+      const modifyBtn = document.getElementById('modify-btn');
+      const panel = document.getElementById('editor-panel');
+      modifyBtn.onclick = () => {
+        const active = panel.classList.toggle('active');
+        modifyBtn.textContent = active ? 'Done' : 'Modify';
+        if (active) renderEditor();
+      };
+    }
+
+    renderCategories();
+    renderEditor();
+    setupControls();
+  </script>
+</body>
+</html>

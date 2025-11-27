@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pictionary Word</title>
+  <style>
+    :root {
+      --orange: #ff8a00;
+      --green: #1fa66a;
+      --pink: #ff6fb0;
+      --yellow: #ffd447;
+      --blue: #6ad0ff;
+      --ink: #0d1015;
+      --muted: #1f262f;
+      --panel: rgba(255, 255, 255, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Inter", -apple-system, system-ui, sans-serif;
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.5rem 1.2rem 1.8rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .pill {
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      background: var(--panel);
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    .word {
+      font-size: clamp(2.2rem, 7vw, 3.4rem);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      margin: 2rem 0;
+      padding: 1rem 1.3rem;
+      border-radius: 18px;
+      background: var(--panel);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.12);
+    }
+    .empty {
+      font-size: 1.1rem;
+      color: #14202f;
+      background: rgba(255, 255, 255, 0.3);
+      padding: 1rem;
+      border-radius: 16px;
+      line-height: 1.4;
+    }
+    .actions {
+      width: 100%;
+      max-width: 520px;
+    }
+    .primary {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 1rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
+      transition: transform 150ms ease, box-shadow 150ms ease;
+    }
+    .primary:active { transform: translateY(1px); box-shadow: none; }
+    .timer {
+      margin-top: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span id="category-label"></span>
+    <span class="pill" id="remaining"></span>
+  </header>
+
+  <main id="content"></main>
+
+  <div class="actions" id="controls"></div>
+
+  <audio id="beep" preload="auto" src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQwAAAAA//8AAP//AAD//wAA//8AAP//AAD//wAA"></audio>
+
+  <script>
+    const COLORS = {
+      allPlay: 'var(--orange)',
+      difficult: 'var(--green)',
+      action: 'var(--pink)',
+      personPlace: 'var(--yellow)',
+      object: 'var(--blue)'
+    };
+    const LABELS = {
+      allPlay: 'All Play',
+      difficult: 'Difficult',
+      action: 'Action',
+      personPlace: 'Person, Place, etc.',
+      object: 'Object'
+    };
+    const initialWords = {
+      allPlay: ['Sunrise', 'Bridge', 'Treasure', 'Lantern', 'Snowball', 'Festival'],
+      difficult: ['Paradox', 'Hypothesis', 'Eclipse', 'Labyrinth', 'Metaphor', 'Alchemy'],
+      action: ['Juggle', 'Climb', 'Swim', 'Whisper', 'Balance', 'Sneak'],
+      personPlace: ['Teacher', 'Chef', 'Library', 'Space Station', 'Museum', 'Island'],
+      object: ['Compass', 'Backpack', 'Guitar', 'Umbrella', 'Camera', 'Clock']
+    };
+    const STORAGE_KEY = 'pictionaryWords';
+
+    const params = new URLSearchParams(location.search);
+    const category = params.get('category');
+
+    function loadWords() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        try { return JSON.parse(stored); }
+        catch { localStorage.removeItem(STORAGE_KEY); }
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(initialWords));
+      return JSON.parse(JSON.stringify(initialWords));
+    }
+    function saveWords(words) { localStorage.setItem(STORAGE_KEY, JSON.stringify(words)); }
+
+    function pickWord(key) {
+      const words = loadWords();
+      const list = words[key] || [];
+      if (list.length === 0) return { word: null, remaining: 0 };
+      const idx = Math.floor(Math.random() * list.length);
+      const [word] = list.splice(idx, 1);
+      words[key] = list;
+      saveWords(words);
+      return { word, remaining: list.length };
+    }
+
+    function render() {
+      if (!category || !LABELS[category]) {
+        document.body.style.background = '#fafafa';
+        document.getElementById('content').innerHTML = '<div class="empty">Unknown category. Please open from the main page.</div>';
+        return;
+      }
+      document.body.style.background = COLORS[category];
+      document.getElementById('category-label').textContent = LABELS[category];
+      const { word, remaining } = pickWord(category);
+      const content = document.getElementById('content');
+      const remainingEl = document.getElementById('remaining');
+      if (!word) {
+        content.innerHTML = '<div class="empty">No words left here. Reset or add more from the main page.</div>';
+        remainingEl.textContent = '0 left';
+        document.getElementById('controls').innerHTML = '';
+        return;
+      }
+      const wordEl = document.createElement('div');
+      wordEl.className = 'word';
+      wordEl.textContent = word;
+      content.innerHTML = '';
+      content.appendChild(wordEl);
+      remainingEl.textContent = `${remaining} left`;
+      setupTimer();
+    }
+
+    function setupTimer() {
+      const controls = document.getElementById('controls');
+      controls.innerHTML = '';
+      const startBtn = document.createElement('button');
+      startBtn.className = 'primary';
+      startBtn.textContent = 'Start 1s Timer';
+      startBtn.style.background = 'rgba(0,0,0,0.75)';
+      startBtn.style.color = '#fff';
+      controls.appendChild(startBtn);
+      const timerText = document.createElement('div');
+      timerText.className = 'timer';
+      controls.appendChild(timerText);
+      startBtn.onclick = () => {
+        startBtn.disabled = true;
+        startBtn.textContent = '1';
+        let remaining = 1;
+        timerText.textContent = 'Drawing...';
+        const tick = setInterval(() => {
+          remaining -= 1;
+          if (remaining <= 0) {
+            clearInterval(tick);
+            startBtn.textContent = 'Go!';
+            document.getElementById('beep').play().catch(() => {});
+            timerText.textContent = 'Time!';
+            setTimeout(() => {
+              startBtn.textContent = 'Start again';
+              startBtn.disabled = false;
+              timerText.textContent = '';
+            }, 800);
+          } else {
+            startBtn.textContent = remaining.toString();
+          }
+        }, 1000);
+      };
+    }
+
+    render();
+  </script>
+</body>
+</html>
