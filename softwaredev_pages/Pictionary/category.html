@@ -176,6 +176,9 @@
         document.getElementById('controls').innerHTML = '';
         return;
       }
+      if (category !== 'allPlay' && Math.random() < 0.5) {
+        setTimeout(() => alert('All Play! Anyone can guess this word.'), 0);
+      }
       const wordEl = document.createElement('div');
       wordEl.className = 'word';
       wordEl.textContent = word;
